@@ -1,5 +1,5 @@
 'use strict'
-
+const path = require('path')
 import {
   app,
   protocol,
@@ -29,8 +29,10 @@ async function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: (process.env
-        .ELECTRON_NODE_INTEGRATION as unknown) as boolean
+      // nodeIntegration: (process.env
+      //   .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
+      enableRemoteModule: true, // Electron10以后的版本，取消 Remote 模块警告
+      nodeIntegration: true // 是否集成 Nodejs
     },
     show: false //解决第一次显示时画面闪烁问题 # https://www.electronjs.org/docs/api/browser-window#%E4%BD%BF%E7%94%A8ready-to-show%E4%BA%8B%E4%BB%B6
   })
