@@ -122,7 +122,7 @@ ipcMain.on('win-close', (event, arg) => {
 })
 
 ipcMain.on('win-max', (event, arg) => {
-  var win: BrowserWindow | null = BrowserWindow.getFocusedWindow()
+  let win: BrowserWindow | null = BrowserWindow.getFocusedWindow()
   try {
     if (win?.isMaximized()) {
       win.unmaximize()
