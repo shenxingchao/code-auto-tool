@@ -23,12 +23,14 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env
         .ELECTRON_NODE_INTEGRATION as unknown) as boolean
-    }
+    },
+    show: false //解决第一次显示时画面闪烁问题 # https://www.electronjs.org/docs/api/browser-window#%E4%BD%BF%E7%94%A8ready-to-show%E4%BA%8B%E4%BB%B6
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -40,6 +42,11 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
+  win.once('ready-to-show', () => {
+    win.show()
+  }) //解决第一次显示时画面闪烁问题 # https://www.electronjs.org/docs/api/browser-window#%E4%BD%BF%E7%94%A8ready-to-show%E4%BA%8B%E4%BB%B6
+
   if (!isDevelopment) {
     autoUpdater.checkForUpdates()
     autoUpdater.on('update-downloaded', () => {
