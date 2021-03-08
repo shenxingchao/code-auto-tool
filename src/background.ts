@@ -1,9 +1,17 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import {
+  app,
+  protocol,
+  BrowserWindow,
+  dialog,
+  MessageBoxReturnValue
+} from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
+import { autoUpdater } from 'electron-updater' //引入 autoUpdater
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -16,11 +24,10 @@ async function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env
-          .ELECTRON_NODE_INTEGRATION as unknown) as boolean
+        .ELECTRON_NODE_INTEGRATION as unknown) as boolean
     }
   })
 
@@ -33,6 +40,26 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
+  autoUpdater.checkForUpdates()
+  autoUpdater.on('update-downloaded', () => {
+    dialog
+      .showMessageBox({
+        type: 'info',
+        title: '提示',
+        message: '有新版本已经下载完毕，是否立即安装？',
+        buttons: ['ok', 'cancel']
+      })
+      .then((res: MessageBoxReturnValue) => {
+        if (res.response == 0) {
+          //下载完成后执行 quitAndInstall
+          autoUpdater.quitAndInstall() //关闭软件并安装新版本
+        } else {
+          //关闭应用程序时安装
+        }
+      })
+      .catch(() => {})
+  })
 }
 
 // Quit when all windows are closed.
@@ -68,7 +95,7 @@ app.on('ready', async () => {
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
-    process.on('message', (data) => {
+    process.on('message', data => {
       if (data === 'graceful-exit') {
         app.quit()
       }
