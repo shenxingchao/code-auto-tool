@@ -5,7 +5,8 @@ import {
   protocol,
   BrowserWindow,
   dialog,
-  MessageBoxReturnValue
+  MessageBoxReturnValue,
+  ipcMain
 } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension /*,{ VUEJS_DEVTOOLS }*/ from 'electron-devtools-installer'
@@ -23,6 +24,7 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 600,
     frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -113,3 +115,23 @@ if (isDevelopment) {
     })
   }
 }
+
+//主进程监听渲染进程 最大化最小话操作
+ipcMain.on('win-close', (event, arg) => {
+  BrowserWindow.getFocusedWindow()?.close()
+})
+
+ipcMain.on('win-max', (event, arg) => {
+  var win: BrowserWindow | null = BrowserWindow.getFocusedWindow()
+  try {
+    if (win?.isMaximized()) {
+      win.unmaximize()
+    } else {
+      win?.maximize()
+    }
+  } catch (e) {}
+})
+
+ipcMain.on('win-min', (event, arg) => {
+  BrowserWindow.getFocusedWindow()?.minimize()
+})
