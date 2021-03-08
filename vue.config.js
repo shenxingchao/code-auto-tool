@@ -16,6 +16,7 @@ module.exports = {
   },
   pluginOptions: {
     electronBuilder: {
+      nodeIntegration: true,
       builderOptions: {
         appId: 'com.sxc.code-auto-tool', //appId
         productName: 'code-auto-tool', //安装目录名称
