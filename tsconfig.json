@@ -23,7 +23,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/preload2.js"
+    "src/preload2.js",
+    "src/db/index.ts"
   ],
   "exclude": ["node_modules"]
 }

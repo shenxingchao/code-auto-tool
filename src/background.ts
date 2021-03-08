@@ -32,7 +32,8 @@ async function createWindow() {
       nodeIntegration: (process.env
         .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
       webSecurity: false,
-      contextIsolation: false
+      contextIsolation: false,
+      enableRemoteModule: true
     },
     show: false //解决第一次显示时画面闪烁问题 # https://www.electronjs.org/docs/api/browser-window#%E4%BD%BF%E7%94%A8ready-to-show%E4%BA%8B%E4%BB%B6
   })

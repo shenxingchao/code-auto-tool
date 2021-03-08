@@ -9,8 +9,15 @@ import 'element-plus/lib/theme-chalk/index.css'
 import 'normalize.css/normalize.css'
 //引入svg
 import SvgPlugin from '@/components/SvgIcon'
+//引入nedb数据库
+import db from '@/db/index'
 
 const app = createApp(App)
+
+//配置全局属性
+//引入db
+app.config.globalProperties.$db = db
+
 //使用状态
 app.use(store)
 //使用路由
