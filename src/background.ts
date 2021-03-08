@@ -31,7 +31,7 @@ async function createWindow() {
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env
         .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
-      preload: path.join(__dirname, 'preload.js'),
+      webSecurity: false,
       contextIsolation: false
     },
     show: false //解决第一次显示时画面闪烁问题 # https://www.electronjs.org/docs/api/browser-window#%E4%BD%BF%E7%94%A8ready-to-show%E4%BA%8B%E4%BB%B6
