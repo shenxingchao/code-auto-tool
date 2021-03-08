@@ -40,26 +40,26 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-
-  autoUpdater.checkForUpdates()
-  autoUpdater.on('update-downloaded', () => {
-    dialog
-      .showMessageBox({
-        type: 'info',
-        title: '提示',
-        message: '有新版本已经下载完毕，是否立即安装？',
-        buttons: ['ok', 'cancel']
-      })
-      .then((res: MessageBoxReturnValue) => {
-        if (res.response == 0) {
-          //下载完成后执行 quitAndInstall
-          autoUpdater.quitAndInstall() //关闭软件并安装新版本
-        } else {
-          //关闭应用程序时安装
-        }
-      })
-      .catch(() => {})
-  })
+  if (!isDevelopment) {
+    autoUpdater.checkForUpdates()
+    autoUpdater.on('update-downloaded', () => {
+      dialog
+        .showMessageBox({
+          type: 'info',
+          title: '提示',
+          message: '有新版本已经下载完毕，是否立即安装？',
+          buttons: ['ok', 'cancel']
+        })
+        .then((res: MessageBoxReturnValue) => {
+          if (res.response == 0) {
+            //下载完成后执行 quitAndInstall
+            autoUpdater.quitAndInstall() //关闭软件并安装新版本
+          } else {
+            //关闭应用程序时安装
+          }
+        })
+    })
+  }
 }
 
 // Quit when all windows are closed.
