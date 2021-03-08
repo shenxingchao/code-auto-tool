@@ -1,5 +1,5 @@
 <template>
-  helloworld
+  <el-button type="primary">hello elementui</el-button>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
