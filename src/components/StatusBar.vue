@@ -14,30 +14,33 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 //从渲染器进程到主进程的异步通信
+import { ipcRenderer } from 'electron'
 
 export default defineComponent({
   name: 'StatusBar',
   setup() {
+    //基本类型用这个
+    let max = ref(false)
     onMounted(() => {
-      //基本类型用这个
-      let max = ref(false)
       // 关闭
-      //   let close = document.getElementById('winclose')
-      //   close?.addEventListener('click', function () {
-      //     ipcRenderer.send('win-close', '')
-      //   })
-      //   // 最大化
-      //   let maximize = document.getElementById('maximize')
-      //   maximize?.addEventListener('click', function () {
-      //     max.value = !max
-      //     ipcRenderer.send('win-max', '')
-      //   })
-      //   // 最小化
-      //   let minimize = document.getElementById('minimize')
-      //   minimize?.addEventListener('click', function () {
-      //     ipcRenderer.send('win-min', '')
-      //   })
+      let close = document.getElementById('winclose')
+      close?.addEventListener('click', function () {
+        ipcRenderer.send('win-close', '')
+      })
+      // 最大化
+      let maximize = document.getElementById('maximize')
+      maximize?.addEventListener('click', function () {
+        alert(33)
+        max.value = !max.value
+        ipcRenderer.send('win-max', '')
+      })
+      // 最小化
+      let minimize = document.getElementById('minimize')
+      minimize?.addEventListener('click', function () {
+        ipcRenderer.send('win-min', '')
+      })
     })
+    return { max }
   },
 })
 </script>
