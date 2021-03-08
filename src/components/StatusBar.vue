@@ -30,7 +30,6 @@ export default defineComponent({
       // 最大化
       let maximize = document.getElementById('maximize')
       maximize?.addEventListener('click', function () {
-        alert(33)
         max.value = !max.value
         ipcRenderer.send('win-max', '')
       })
