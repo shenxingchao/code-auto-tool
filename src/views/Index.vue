@@ -6,10 +6,13 @@ import { defineComponent, getCurrentInstance } from 'vue'
 
 export default defineComponent({
   setup() {
-    const { ctx } = getCurrentInstance() as any
+    //当前组件实例 # https://v3.cn.vuejs.org/api/composition-api.html#getcurrentinstance
+    const internalInstance = getCurrentInstance()
+    //访问 globalProperties
+    const db = internalInstance?.appContext.config.globalProperties.$db
+
     //随便测一个
-    console.log(ctx.$db)
-    ctx.$db.insert({ a: 5 }).then((res: any) => {
+    db.find({}).then((res: any) => {
       console.log(res)
     })
   },

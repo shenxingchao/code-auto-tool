@@ -10,13 +10,13 @@ import 'normalize.css/normalize.css'
 //引入svg
 import SvgPlugin from '@/components/SvgIcon'
 //引入nedb数据库
-import db from '@/db/index'
+import Db from '@/db/index'
 
 const app = createApp(App)
 
 //配置全局属性
 //引入db
-app.config.globalProperties.$db = db
+app.config.globalProperties.$db = new Db('./src/db/dbtmp.db') //E:/codetool/code-auto-tool/dbtmp.db
 
 //使用状态
 app.use(store)

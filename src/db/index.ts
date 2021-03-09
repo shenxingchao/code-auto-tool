@@ -15,11 +15,14 @@ class Db<T> {
   //db属性
   db: Datastore
 
-  //构造方法
-  constructor() {
+  /**
+   * 构造方法
+   * @param db_path  可以是相对路径，也可以是绝对路径 nedb 本地化 见vue.config.js
+   */
+  constructor(db_path: string) {
     this.db = new Datastore({
       autoload: true,
-      filename: './dbtmp.db' //path.join(__dirname, './dbtmp.db')  //path.join(remote.app.getPath('userData'), './dbtmp.db')
+      filename: db_path //path.join(__dirname, './dbtmp.db')  //path.join(remote.app.getPath('userData'), './dbtmp.db') //E:/codetool/code-auto-tool/dbtmp.db
     })
   }
 
@@ -93,5 +96,5 @@ class Db<T> {
   // }
 }
 
-export default new Db()
-// export default new Db().db  db是nedb的属性 调用时候用ctx.$db.insert()
+export default Db
+// new Db().db  db是nedb的属性
