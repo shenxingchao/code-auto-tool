@@ -8,8 +8,9 @@ export default defineComponent({
   setup() {
     const { ctx } = getCurrentInstance() as any
     //随便测一个
-    ctx.$db.insert({ name: 1, age: 2 }).then((res: any) => {
-      console.log('res', res)
+    console.log(ctx.$db)
+    ctx.$db.insert({ a: 5 }).then((res: any) => {
+      console.log(res)
     })
   },
 })

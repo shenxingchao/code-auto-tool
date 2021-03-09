@@ -1,6 +1,6 @@
 import Datastore from 'nedb'
-import path from 'path'
-import { remote } from 'electron'
+// import path from 'path'
+// import { remote } from 'electron'
 
 type Query<T> = Partial<T> & {
   [prop: string]: string
@@ -19,7 +19,7 @@ class Db<T> {
   constructor() {
     this.db = new Datastore({
       autoload: true,
-      filename: './src/db/dbtmp.db' //path.join(__dirname, './dbtmp.db')  //path.join(remote.app.getPath('userData'), './dbtmp.db')
+      filename: './dbtmp.db' //path.join(__dirname, './dbtmp.db')  //path.join(remote.app.getPath('userData'), './dbtmp.db')
     })
   }
 
@@ -94,4 +94,4 @@ class Db<T> {
 }
 
 export default new Db()
-// export default new Db().db  db是nedb的属性 调用不封装的时候用ctx.$db.db.insert()
+// export default new Db().db  db是nedb的属性 调用时候用ctx.$db.insert()
