@@ -1,4 +1,4 @@
-import Datastore from 'nedb'
+import Datastore, { RemoveOptions, UpdateOptions } from 'nedb'
 // import path from 'path'
 // import { remote } from 'electron'
 
@@ -68,32 +68,61 @@ class Db<T> {
     })
   }
 
-  // count(query: Query<T>): Promise<number> {
-  //   return new Promise((res, rej) => {
-  //     this.db.count(query, function (err, amount) {
-  //       if (err) return rej(err)
-  //       res(amount)
-  //     })
-  //   })
-  // }
+  /**
+   * 统计符合条件的记录数量
+   * @param query | object 查找条件
+   * @returns
+   */
+  count(query: Query<T>): Promise<number> {
+    return new Promise((reslove, reject) => {
+      this.db.count(query, function (err: any, amount: number) {
+        if (err) return reject(err)
+        reslove(amount)
+      })
+    })
+  }
 
-  // update(query: Query<T>, update: Partial<T>, options: UpdateOptions = {}): Promise<number> {
-  //   return new Promise((res, rej) => {
-  //     this.db.update(query, update, options, function (err, numAffected) {
-  //       if (err) return rej(err)
-  //       res(numAffected)
-  //     })
-  //   })
-  // }
+  /**
+   * 更新符合条件的记录
+   * @param query | object 查找条件
+   * @param update | 更新的数据
+   * @param options | 配置 {multi: true} 更新多个 upsert(默认为false)，如果query没有匹配到结果集，
+   * 有两种情况需要考虑，一个是update是一个简单的对象(不包含任何修饰符)，另一种情况是带有修饰符，对第一种情况会直接将该文档插入，对第二种情况会将通过修饰符更改后的文档插入
+   * $inc 自增 入栈 出栈 等等 基本都有了 # https://github.com/louischatriot/nedb#updating-documents
+   * @returns
+   */
+  update(
+    query: Query<T>,
+    update: Partial<T>,
+    options: UpdateOptions = {}
+  ): Promise<number> {
+    return new Promise((reslove, reject) => {
+      this.db.update(
+        query,
+        update,
+        options,
+        function (err: any, numAffected: number) {
+          if (err) return reject(err)
+          reslove(numAffected)
+        }
+      )
+    })
+  }
 
-  // remove(query: Query<T>, options?: RemoveOptions): Promise<number> {
-  //   return new Promise((res, rej) => {
-  //     this.db.remove(query, options, function (err, numRemoved) {
-  //       if (err) return rej(err)
-  //       res(numRemoved)
-  //     })
-  //   })
-  // }
+  /**
+   * 删除符合条件的所有数据
+   * @param query | object 查找条件
+   * @param options 配置 {multi: true} 删除多个
+   * @returns
+   */
+  remove(query: Query<T>, options: RemoveOptions = {}): Promise<number> {
+    return new Promise((reslove, reject) => {
+      this.db.remove(query, options, function (err: any, numRemoved: number) {
+        if (err) return reject(err)
+        reslove(numRemoved)
+      })
+    })
+  }
 }
 
 export default Db

@@ -16,7 +16,7 @@ const app = createApp(App)
 
 //配置全局属性
 //引入db
-app.config.globalProperties.$db = new Db('./src/db/dbtmp.db') //E:/codetool/code-auto-tool/dbtmp.db
+app.config.globalProperties.$db = new Db('./src/db/dbtmp.db') //生成环境用绝对路径E:/codetool/code-auto-tool/dbtmp.db
 
 //使用状态
 app.use(store)
