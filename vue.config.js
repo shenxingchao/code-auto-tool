@@ -55,6 +55,13 @@ module.exports = {
       .end()
     // svg配置结束
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: '@import "./src/styles/value.scss";'
+      }
+    }
+  },
   pluginOptions: {
     electronBuilder: {
       nodeIntegration: true, //配置防止浏览器报错'__dirname' is not defind

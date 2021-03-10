@@ -5,8 +5,10 @@ import store from './store'
 //引入element plus
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
-// css样式重置
+//css样式重置
 import 'normalize.css/normalize.css'
+//引入全局scss样式
+import '@/styles/index.scss'
 //引入svg
 import SvgPlugin from '@/components/SvgIcon'
 //引入nedb数据库

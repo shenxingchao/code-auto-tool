@@ -1,0 +1,5 @@
+//重置按钮内部内容水平对齐
+.el-button span {
+  display: flex;
+  align-items: center;
+}
