@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="primary-btn-group">
-      <el-button class="btn" type="primary" @click="handleClickCreate()">
-        <svg-icon name="create" className="icon" />创建一个模板
+      <el-button class="btn" type="primary" @click="handleClickTemplateList()">
+        <svg-icon name="template_list" className="icon" />模板管理
       </el-button>
       <el-button class="btn" type="warning">
         <svg-icon name="make" className="icon" />生成
@@ -28,9 +28,9 @@ export default defineComponent({
     //定义router
     const router = useRouter()
 
-    //创建模板
-    const handleClickCreate = () => {
-      router.push('CreateTemplate')
+    //模板管理
+    const handleClickTemplateList = () => {
+      router.push('TemplateList')
     }
 
     //随便测一个
@@ -38,7 +38,7 @@ export default defineComponent({
     //   console.log(res)
     // })
 
-    return { handleClickCreate }
+    return { handleClickTemplateList }
   },
 })
 </script>

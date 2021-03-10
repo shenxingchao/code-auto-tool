@@ -20,13 +20,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  reactive,
-  ref,
-  getCurrentInstance,
-} from 'vue'
+import { defineComponent, reactive, ref, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 //数据类型
 interface ruleForm {
@@ -34,6 +28,7 @@ interface ruleForm {
 }
 
 export default defineComponent({
+  name: 'AddTemplate',
   setup() {
     //定义router
     const router = useRouter()
