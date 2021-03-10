@@ -45,18 +45,25 @@ export default defineComponent({
     const ruleForm: ruleForm = reactive({
       title: '',
     })
-    //refs
-    const ruleFormRef = ref(null)
+    //表单refs dom对象
+    const ruleFormRef: any = ref(null)
 
-    //方法
-    const submitForm = (formName: string) => {
-      console.log(ruleFormRef)
-      //   const _this = this
+    //提交表单
+    const submitForm = () => {
+      ruleFormRef.value.validate((valid: any) => {
+        if (valid) {
+          console.log(true)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
-    const resetForm = (formName: string) => {
-      //   this.$refs[formName].resetFields()
+    //重置表单
+    const resetForm = () => {
+      ruleFormRef.value.resetFields()
     }
-    return { rules, ruleForm, router, submitForm, resetForm, ruleFormRef }
+    return { router, rules, ruleForm, ruleFormRef, submitForm, resetForm }
   },
 })
 </script>
