@@ -69,6 +69,34 @@ class Db<T> {
   }
 
   /**
+   *
+   * 查找符合条件的所有数据 并分页
+   * @param query | object 查找条件
+   * @param page | number 当前页
+   * @param page_size | number 分页页数
+   * @param sort | object 排序方式 默认id降序
+   * @returns 数据集
+   */
+  limit(
+    query: Query<T>,
+    page: number,
+    page_size: number,
+    sort: object = { _id: -1 }
+  ): Promise<T[]> {
+    return new Promise((reslove, reject) => {
+      this.db
+        .find(query)
+        .sort(sort)
+        .skip((page - 1) * page_size)
+        .limit(page_size)
+        .exec(function (err: any, docs: T[]) {
+          if (err) return reject(err)
+          reslove(docs)
+        })
+    })
+  }
+
+  /**
    * 统计符合条件的记录数量
    * @param query | object 查找条件
    * @returns
