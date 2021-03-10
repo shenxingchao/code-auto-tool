@@ -6,7 +6,9 @@ import {
   BrowserWindow,
   dialog,
   MessageBoxReturnValue,
-  ipcMain
+  ipcMain,
+  Tray,
+  Menu
 } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension /*,{ VUEJS_DEVTOOLS }*/ from 'electron-devtools-installer'
@@ -19,9 +21,10 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+let win: BrowserWindow
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     minWidth: 800,
@@ -119,6 +122,26 @@ if (isDevelopment) {
     })
   }
 }
+
+//托盘图标
+let tray = null
+app.whenReady().then(() => {
+  tray = new Tray(path.join(__dirname, '../public/favicon.ico'))
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: '退出',
+      type: 'normal',
+      click: () => {
+        app.quit()
+      }
+    }
+  ])
+  tray.setToolTip('代码自动生成工具')
+  tray.setContextMenu(contextMenu)
+  tray.on('click', e => {
+    win.show()
+  })
+})
 
 //主进程监听渲染进程 最大化最小化操作
 ipcMain.on('win-close', (event, arg) => {
