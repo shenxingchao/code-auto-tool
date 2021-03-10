@@ -1,2 +1,18 @@
 @import './value.scss';
 @import './reset_element_plus.scss';
+
+.app-container {
+  padding: 20px;
+  .btn-back {
+    padding-bottom: 20px;
+    .icon {
+      width: 30px;
+      height: 30px;
+      fill: $theme;
+      cursor: pointer;
+      &:hover {
+        fill: $light-theme;
+      }
+    }
+  }
+}

@@ -4,6 +4,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Index',
     component: () => import('../views/Index.vue')
+  },
+  //创建模板
+  {
+    path: '/CreateTemplate',
+    name: 'CreateTemplate',
+    component: () => import('../views/CreateTemplate.vue')
   }
 ]
 

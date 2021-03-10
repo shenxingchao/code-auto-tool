@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="primary-btn-group">
-      <el-button class="btn" type="primary">
+      <el-button class="btn" type="primary" @click="handleClickCreate()">
         <svg-icon name="create" className="icon" />创建一个模板
       </el-button>
       <el-button class="btn" type="warning">
@@ -12,6 +12,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, getCurrentInstance } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   setup() {
@@ -19,11 +20,18 @@ export default defineComponent({
     const internalInstance = getCurrentInstance()
     //访问 globalProperties
     const db = internalInstance?.appContext.config.globalProperties.$db
-
+    //定义router
+    const router = useRouter()
+    //创建模板
+    const handleClickCreate = () => {
+      router.push('CreateTemplate')
+    }
     //随便测一个
-    db.find({ a: 3 }).then((res: any) => {
-      console.log(res)
-    })
+    // db.find({ a: 3 }).then((res: any) => {
+    //   console.log(res)
+    // })
+
+    return { handleClickCreate }
   },
 })
 </script>
