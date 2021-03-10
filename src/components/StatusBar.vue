@@ -30,6 +30,7 @@ export default defineComponent({
       // 最大化
       let maximize = document.getElementById('maximize')
       maximize?.addEventListener('click', function () {
+        console.log(33)
         max.value = !max.value
         ipcRenderer.send('win-max', '')
       })
@@ -61,7 +62,7 @@ export default defineComponent({
   padding-left: 10px;
   color: #ffffff;
   font-size: 12px;
-  background: rgb(182, 7, 7);
+  background: $theme;
   .title {
     flex: 1;
     height: 40px;
@@ -81,8 +82,12 @@ export default defineComponent({
       padding: 11px;
       font-weight: bold;
       fill: #ffffff;
+      cursor: pointer;
       &:hover {
-        cursor: pointer;
+        background: $light-theme;
+      }
+      &:active {
+        background: $deep-theme;
       }
     }
   }
