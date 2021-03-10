@@ -5,7 +5,8 @@
     </el-row>
     <el-row type="flex" justify="center">
       <el-col :xs="24" :md="12">
-        <el-form ref="ruleFormRef" :rules="rules" :model="ruleForm" label-position="right" label-width="150px">
+        <el-form ref="ruleFormRef" :rules="rules" :model="ruleForm" label-position="right" label-width="150px"
+                 @submit.prevent>
           <el-form-item label="标题" prop="title">
             <el-input v-model="ruleForm.title" placeholder="标题" />
           </el-form-item>
@@ -41,7 +42,9 @@ export default defineComponent({
     const internalInstance = getCurrentInstance()
 
     //访问 globalProperties
-    const db = internalInstance?.appContext.config.globalProperties.$db
+    const global: any = internalInstance?.appContext.config.globalProperties
+    //db实例
+    const db = global.$db
 
     //静态变量
     const rules = {
@@ -64,13 +67,30 @@ export default defineComponent({
 
     //提交表单
     const submitForm = () => {
-      ruleFormRef.value.validate((valid: any) => {
+      ruleFormRef.value.validate(async (valid: any) => {
         if (valid) {
-          //新增一条记录到数据库
-          db.template
-            .insert(ruleForm)
-            .then((res: any) => {})
-            .catch((err: any) => {})
+          let record = null
+          //查找记录
+          await db.template.findOne(ruleForm).then((res: any) => {
+            record = res
+          })
+          //如果没有记录
+          if (!record) {
+            //新增一条记录到数据库
+            await db.template
+              .insert(ruleForm)
+              .then((res: any) => {
+                global.$message.success({
+                  message: '添加成功',
+                })
+                router.back()
+              })
+              .catch((err: any) => {})
+          } else {
+            global.$message.error({
+              message: '添加失败，模板名称重复',
+            })
+          }
         } else {
           return false
         }
