@@ -21,14 +21,18 @@ export default defineComponent({
   setup() {
     //当前组件实例 # https://v3.cn.vuejs.org/api/composition-api.html#getcurrentinstance
     const internalInstance = getCurrentInstance()
+
     //访问 globalProperties
     const db = internalInstance?.appContext.config.globalProperties.$db
+
     //定义router
     const router = useRouter()
+
     //创建模板
     const handleClickCreate = () => {
       router.push('CreateTemplate')
     }
+
     //随便测一个
     // db.find({ a: 3 }).then((res: any) => {
     //   console.log(res)

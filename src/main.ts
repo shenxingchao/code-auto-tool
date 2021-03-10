@@ -18,7 +18,15 @@ const app = createApp(App)
 
 //配置全局属性
 //引入db
-app.config.globalProperties.$db = new Db('./src/db/dbtmp.db') //生成环境用绝对路径E:/codetool/code-auto-tool/dbtmp.db
+const database = [
+  { table_name: 'template', filename: './src/db/template.db' }, //表名, 表数据库文件路径  //生成环境用绝对路径E:/codetool/code-auto-tool/template.db
+  { table_name: 'base_control', filename: './src/db/base_control.db' }, //表名, 表数据库文件路径
+  { table_name: 'for_control', filename: './src/db/for_control.db' } //表名, 表数据库文件路径
+]
+app.config.globalProperties.$db = []
+database.forEach((table: any) => {
+  app.config.globalProperties.$db[table.table_name] = new Db(table.filename)
+})
 
 //使用状态
 app.use(store)

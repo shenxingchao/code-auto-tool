@@ -19,7 +19,13 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  getCurrentInstance,
+} from 'vue'
 import { useRouter } from 'vue-router'
 //数据类型
 interface ruleForm {
@@ -30,6 +36,13 @@ export default defineComponent({
   setup() {
     //定义router
     const router = useRouter()
+
+    //当前组件实例
+    const internalInstance = getCurrentInstance()
+
+    //访问 globalProperties
+    const db = internalInstance?.appContext.config.globalProperties.$db
+
     //静态变量
     const rules = {
       title: [
@@ -45,6 +58,7 @@ export default defineComponent({
     const ruleForm: ruleForm = reactive({
       title: '',
     })
+
     //表单refs dom对象
     const ruleFormRef: any = ref(null)
 
@@ -52,17 +66,22 @@ export default defineComponent({
     const submitForm = () => {
       ruleFormRef.value.validate((valid: any) => {
         if (valid) {
-          console.log(true)
+          //新增一条记录到数据库
+          db.template
+            .insert(ruleForm)
+            .then((res: any) => {})
+            .catch((err: any) => {})
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     }
+
     //重置表单
     const resetForm = () => {
       ruleFormRef.value.resetFields()
     }
+
     return { router, rules, ruleForm, ruleFormRef, submitForm, resetForm }
   },
 })
