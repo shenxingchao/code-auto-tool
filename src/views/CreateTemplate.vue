@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row class="btn-back" type="flex" justify="flex-start">
+    <el-row class="btn-back" type="flex" justify="start">
       <svg-icon name="back" className="icon" @click="router.back()" />
     </el-row>
     <el-row type="flex" justify="center">

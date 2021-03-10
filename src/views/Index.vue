@@ -8,6 +8,9 @@
         <svg-icon name="make" className="icon" />生成
       </el-button>
     </div>
+    <el-row type="flex" justify="center" align="middle">
+      <h3>create based on vue3 + electron11 + element-plus</h3>
+    </el-row>
   </div>
 </template>
 <script lang="ts">
@@ -40,6 +43,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

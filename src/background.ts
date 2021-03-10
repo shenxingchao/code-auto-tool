@@ -24,7 +24,8 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    minWidth: 600,
+    minWidth: 800,
+    minHeight: 600,
     frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -119,7 +120,7 @@ if (isDevelopment) {
   }
 }
 
-//主进程监听渲染进程 最大化最小话操作
+//主进程监听渲染进程 最大化最小化操作
 ipcMain.on('win-close', (event, arg) => {
   BrowserWindow.getFocusedWindow()?.close()
 })
