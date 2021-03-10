@@ -23,7 +23,7 @@
 import { defineComponent, reactive, ref, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 //数据类型
-interface ruleForm {
+interface RuleForm {
   title: string
 }
 
@@ -53,7 +53,7 @@ export default defineComponent({
     }
 
     //数据对象
-    const ruleForm: ruleForm = reactive({
+    const ruleForm: RuleForm = reactive({
       title: '',
     })
 
