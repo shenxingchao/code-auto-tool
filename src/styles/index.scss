@@ -1,20 +1,32 @@
 @import './value.scss';
 @import './reset_element_plus.scss';
 
+* {
+  user-select: none;
+}
 .app-container {
   padding: 20px;
-  .btn-back {
+  .tool-btn-group {
     padding-bottom: 20px;
     .icon {
-      width: 30px;
-      height: 30px;
-      fill: $theme;
+      width: 16px;
+      height: 16px;
+      padding: 11px;
+      border-radius: 2px;
+      fill: $white;
+      background: $theme;
       cursor: pointer;
       &:hover {
-        fill: $light-theme;
+        background: $light-theme;
+      }
+      &:active {
+        background: $deep-theme;
       }
       margin-right: 20px;
     }
+  }
+  .block {
+    margin-top: 20px;
   }
 }
 h1 {

@@ -86,7 +86,6 @@ export default defineComponent({
       width: 16px;
       height: 16px;
       padding: 11px;
-      font-weight: bold;
       fill: #ffffff;
       cursor: pointer;
       &:hover {

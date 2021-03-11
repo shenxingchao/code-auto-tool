@@ -1,15 +1,20 @@
 <template>
   <div class="app-container">
-    <el-row class="btn-back" type="flex" justify="start">
+    <el-row class="tool-btn-group" type="flex" justify="start">
       <svg-icon name="back" className="icon" @click="router.back()" />
       <svg-icon name="add" className="icon" @click="router.push('AddTemplate')" />
     </el-row>
-    <el-table :data="data.list" style="width: 100%" border fit default-expand-all>
+    <el-table :data="list" style="width: 100%" border fit default-expand-all>
       <el-table-column prop="_id" label="id" width="180">
       </el-table-column>
       <el-table-column prop="title" label="名称">
       </el-table-column>
     </el-table>
+    <el-row class="block">
+      <el-pagination :current-page="page" :total="total" :page-sizes="page_sizes" :page-size="page_size" background
+                     layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange" />
+    </el-row>
   </div>
 </template>
 <script lang="ts">
@@ -17,6 +22,7 @@ import {
   defineComponent,
   reactive,
   ref,
+  toRefs,
   getCurrentInstance,
   onMounted,
 } from 'vue'
@@ -30,7 +36,11 @@ interface List {
 
 //数据
 interface Data {
-  list: List[]
+  list: List[] //列表
+  page: number //当前页
+  page_size: number //分页数量
+  page_sizes: number[] //分页数量选择
+  total: number //总数
 }
 
 export default defineComponent({
@@ -52,14 +62,36 @@ export default defineComponent({
     //数据对象
     let data: Data = reactive({
       list: [],
+      page: 1,
+      page_size: 1,
+      page_sizes: [10, 20, 30, 50],
+      total: 0,
     })
 
     //获取模板列表
     const getTemplateList = async () => {
-      //分页获取记录
-      await db.template.limit({}, 1, 10, { _id: -1 }).then((res: any) => {
-        data.list = res
+      //获取总数
+      await db.template.count({}).then((res: any) => {
+        data.total = res
       })
+      //分页获取记录
+      await db.template
+        .limit({}, data.page, data.page_size, { _id: -1 })
+        .then((res: any) => {
+          data.list = res
+        })
+    }
+
+    //分页数量切换
+    const handleSizeChange = (val: any) => {
+      data.page_size = val
+      getTemplateList()
+    }
+
+    //切换页码
+    const handleCurrentChange = (val: any) => {
+      data.page = val
+      getTemplateList()
     }
 
     //相当于mounted
@@ -67,7 +99,13 @@ export default defineComponent({
       await getTemplateList()
     })
 
-    return { router, getTemplateList, data }
+    return {
+      router,
+      ...toRefs(data),
+      getTemplateList,
+      handleSizeChange,
+      handleCurrentChange,
+    }
   },
 })
 </script>
