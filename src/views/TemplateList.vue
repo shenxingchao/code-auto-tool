@@ -63,7 +63,7 @@ export default defineComponent({
     let data: Data = reactive({
       list: [],
       page: 1,
-      page_size: 1,
+      page_size: 10,
       page_sizes: [10, 20, 30, 50],
       total: 0,
     })
