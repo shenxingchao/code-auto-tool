@@ -22,18 +22,24 @@ export default defineComponent({
     //基本类型用这个
     let max = ref(false)
     onMounted(() => {
+      //监听最大化状态变化 去改变最大化或者是恢复按钮
+      ipcRenderer.send('listen-maximize')
+      ipcRenderer.on('maximize-change', (event, arg) => {
+        max.value = arg
+      })
+
       // 关闭
       let close = document.getElementById('winclose')
       close?.addEventListener('click', function () {
         ipcRenderer.send('win-close', '')
       })
+
       // 最大化
       let maximize = document.getElementById('maximize')
       maximize?.addEventListener('click', function () {
-        console.log(33)
-        max.value = !max.value
         ipcRenderer.send('win-max', '')
       })
+
       // 最小化
       let minimize = document.getElementById('minimize')
       minimize?.addEventListener('click', function () {
