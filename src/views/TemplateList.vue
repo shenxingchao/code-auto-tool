@@ -4,12 +4,7 @@
       <svg-icon name="back" className="icon" @click="router.back()" />
       <svg-icon name="add" className="icon" @click="router.push('AddTemplate')" />
     </el-row>
-    <el-table :data="list" style="width: 100%" border fit default-expand-all>
-      <el-table-column prop="_id" label="id" width="180">
-      </el-table-column>
-      <el-table-column prop="title" label="名称">
-      </el-table-column>
-    </el-table>
+    <CustomeTable :data="list" :table-head="table_head" :show-selection="true" />
     <el-row class="block">
       <el-pagination :current-page="page" :total="total" :page-sizes="page_sizes" :page-size="page_size" background
                      layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
@@ -27,7 +22,7 @@ import {
   onMounted,
 } from 'vue'
 import { useRouter } from 'vue-router'
-
+import CustomeTable from '@/components/CustomTable.vue'
 //列表
 interface List {
   _id: string
@@ -45,6 +40,9 @@ interface Data {
 
 export default defineComponent({
   name: 'TemplateList',
+  components: {
+    CustomeTable,
+  },
   setup() {
     //定义router
     const router = useRouter()
@@ -58,6 +56,17 @@ export default defineComponent({
     const db = global.$db
 
     //静态变量
+    const table_head = [
+      {
+        label: '编号',
+        prop: '_id',
+        width: 200,
+      },
+      {
+        label: '名称',
+        prop: 'title',
+      },
+    ]
 
     //数据对象
     let data: Data = reactive({
@@ -101,6 +110,7 @@ export default defineComponent({
 
     return {
       router,
+      table_head,
       ...toRefs(data),
       getTemplateList,
       handleSizeChange,
