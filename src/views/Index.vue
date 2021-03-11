@@ -33,11 +33,6 @@ export default defineComponent({
       router.push('TemplateList')
     }
 
-    //随便测一个
-    // db.find({ a: 3 }).then((res: any) => {
-    //   console.log(res)
-    // })
-
     return { handleClickTemplateList }
   },
 })
