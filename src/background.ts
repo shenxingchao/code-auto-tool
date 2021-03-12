@@ -159,6 +159,10 @@ ipcMain.on('win-max', (event, arg) => {
   } catch (e) {}
 })
 
+ipcMain.on('win-min', (event, arg) => {
+  BrowserWindow.getFocusedWindow()?.minimize()
+})
+
 //渲染进程请求监听最大化状态 回复渲染进程
 ipcMain.on('listen-maximize', (event, arg) => {
   win.on('maximize', () => {
