@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="tool-btn-group" type="flex" justify="start">
       <svg-icon name="back" className="icon" @click="router.back()" />
-      <svg-icon name="add" className="icon" @click="router.push('AddTemplate')" />
+      <svg-icon name="add" className="icon" @click="router.push('/Template/AddTemplate')" />
     </el-row>
     <custome-table :data="list" :table-head="table_head" :params="params" :show-selection="true" :isRadio="false"
                    :optWidth="120" :showOpt="true" @handleSizeChange="handleSizeChange"
@@ -17,7 +17,7 @@
             <el-button type="primary" icon="el-icon-search" @click="onSubmit">查询</el-button>
             <el-button icon="el-icon-refresh-left" @click="onReset">重置
             </el-button>
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="router.push('/AddTemplate')">添加
+            <el-button type="primary" icon="el-icon-plus" size="mini" @click="router.push('/Template/AddTemplate')">添加
             </el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteRows">删除</el-button>
           </el-form-item>
@@ -142,9 +142,9 @@ export default defineComponent({
     //双击编辑
     const handleRowDblClick = (val: any) => {
       router.push({
-        path: 'TemplateEdit',
+        path: '/Template/EditTemplate',
         query: {
-          id: val,
+          _id: val,
         },
       })
     }

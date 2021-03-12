@@ -30,7 +30,7 @@ export default defineComponent({
 
     //模板管理
     const handleClickTemplateList = () => {
-      router.push('TemplateList')
+      router.push('/Template/TemplateList')
     }
 
     return { handleClickTemplateList }

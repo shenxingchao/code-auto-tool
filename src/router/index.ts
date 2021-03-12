@@ -3,19 +3,33 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Index',
-    component: () => import('../views/Index.vue')
+    component: () => import('@/views/Index.vue')
   },
-  //模板列表
+  //模板管理
   {
-    path: '/TemplateList',
-    name: 'TemplateList',
-    component: () => import('../views/TemplateList.vue')
-  },
-  //创建模板
-  {
-    path: '/AddTemplate',
-    name: 'AddTemplate',
-    component: () => import('../views/AddTemplate.vue')
+    path: '/Template',
+    name: 'Template',
+    component: () => import('@/views/Template/Template.vue'),
+    children: [
+      //模板列表
+      {
+        path: '/Template/TemplateList',
+        name: 'TemplateList',
+        component: () => import('@/views/Template/TemplateList.vue')
+      },
+      //添加模板
+      {
+        path: '/Template/AddTemplate',
+        name: 'AddTemplate',
+        component: () => import('@/views/Template/AddTemplate.vue')
+      },
+      //编辑模板
+      {
+        path: '/Template/EditTemplate',
+        name: 'EditTemplate',
+        component: () => import('@/views/Template/EditTemplate.vue')
+      }
+    ]
   }
 ]
 

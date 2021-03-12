@@ -159,7 +159,7 @@ export default defineComponent({
         // 将当前点击项选中
         multipleTableRef.value.toggleRowSelection(row, true)
         if (row) {
-          emit('handleSelectionChange', row.id)
+          emit('handleSelectionChange', row._id)
         }
       }
     }
@@ -185,8 +185,8 @@ export default defineComponent({
 
     //双击打开编辑
     const handleRowDblClick = (val: any) => {
-      let id = val.id
-      emit('handleRowDblClick', id)
+      let _id = val._id
+      emit('handleRowDblClick', _id)
     }
 
     //编辑操作
