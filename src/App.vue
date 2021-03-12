@@ -23,6 +23,6 @@ export default defineComponent({
   width: 100%;
   padding-top: 40px;
   height: calc(100vh - 40px);
-  overflow: hidden;
+  overflow: auto;
 }
 </style>

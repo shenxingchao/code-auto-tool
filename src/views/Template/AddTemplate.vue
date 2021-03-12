@@ -56,7 +56,7 @@ export default defineComponent({
     //数据对象
     const ruleForm: RuleForm = reactive({
       title: '',
-      add_time: global.$moment().format('YYYY-MM-DD h:mm:ss'),
+      add_time: global.$moment().format('x'),
     })
 
     //表单refs dom对象

@@ -94,6 +94,11 @@ export default defineComponent({
         label: '创建时间',
         prop: 'add_time',
         width: 150,
+        render: (row: any) => {
+          return global
+            .$moment(Number(row.add_time))
+            .format('YYYY-MM-DD kk:mm:ss')
+        },
       },
     ]
 
