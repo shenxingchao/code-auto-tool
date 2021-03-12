@@ -5,7 +5,7 @@
       <svg-icon name="add" className="icon" @click="router.push('/Template/AddTemplate')" />
     </el-row>
     <custome-table :data="list" :table-head="table_head" :params="params" :show-selection="true" :isRadio="false"
-                   :optWidth="120" :showOpt="true" @handleSizeChange="handleSizeChange"
+                   :optWidth="280" :showOpt="true" @handleSizeChange="handleSizeChange"
                    @handleCurrentChange="handleCurrentChange" @handleSelectionChange="handleSelectionChange"
                    @handleRowDblClick="handleRowDblClick" @handleEdit="handleEdit" @handleDelete="handleDelete">
       <template v-slot:searchBar>
@@ -23,6 +23,14 @@
           </el-form-item>
         </el-form>
       </template>
+      <template v-slot:opt="slotProps">
+        <el-button size="mini" type="success" icon="el-icon-document"
+                   @click.stop="router.push({path:'/Template/EditBaseTemplate',query:{template_id:slotProps.scope.row._id}})">
+        </el-button>
+        <el-button size="mini" type="warning" icon="el-icon-document-checked"
+                   @click.stop="router.push({path:'/Template/ControlList',query:{template_id:slotProps.scope.row._id}})">
+        </el-button>
+      </template>
     </custome-table>
   </div>
 </template>
@@ -37,6 +45,7 @@ import {
 } from 'vue'
 import { useRouter } from 'vue-router'
 import CustomeTable from '@/components/CustomTable.vue'
+import Template from './Template.vue'
 //列表
 interface List {
   _id: string
@@ -63,6 +72,7 @@ export default defineComponent({
   name: 'TemplateList',
   components: {
     CustomeTable,
+    Template,
   },
   setup() {
     //定义router
@@ -84,7 +94,7 @@ export default defineComponent({
       {
         label: '编号',
         prop: '_id',
-        width: 180,
+        width: 80,
       },
       {
         label: '名称',
