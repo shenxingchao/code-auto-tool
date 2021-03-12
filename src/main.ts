@@ -15,6 +15,8 @@ import '@/styles/index.scss'
 import SvgPlugin from '@/components/SvgIcon'
 //引入nedb数据库
 import Db from '@/db/index'
+//引入momentjs
+import moment from 'moment'
 
 const app = createApp(App)
 
@@ -29,6 +31,8 @@ app.config.globalProperties.$db = []
 database.forEach((table: any) => {
   app.config.globalProperties.$db[table.table_name] = new Db(table.filename)
 })
+//引入momentjs
+app.config.globalProperties.$moment = moment
 
 //使用状态
 app.use(store)

@@ -18,7 +18,7 @@
       </template>
     </el-table-column>
     <!-- 操作列 -->
-    <el-table-column v-if="showOpt" align="center" label="操作" :min-width="optWidth">
+    <el-table-column v-if="showOpt" align="center" label="操作" :width="optWidth">
       <template v-slot="scope">
         <el-button size="mini" icon="el-icon-edit" type="primary" @click.stop="handleEdit(scope.$index, scope.row)">
         </el-button>

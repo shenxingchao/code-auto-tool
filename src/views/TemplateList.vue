@@ -84,20 +84,16 @@ export default defineComponent({
       {
         label: '编号',
         prop: '_id',
-        width: 200,
+        width: 180,
       },
       {
         label: '名称',
         prop: 'title',
-        width: 200,
       },
       {
         label: '创建时间',
         prop: 'add_time',
-        width: 200,
-        render: (row: any) => {
-          return row.add_time
-        },
+        width: 150,
       },
     ]
 
