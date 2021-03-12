@@ -15,6 +15,7 @@
     "@types/nedb": "^1.8.11",
     "electron-updater": "^4.3.8",
     "element-plus": "^1.0.2-beta.33",
+    "moment": "^2.29.1",
     "nedb": "^1.8.0",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",

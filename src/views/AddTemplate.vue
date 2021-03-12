@@ -25,6 +25,7 @@ import { useRouter } from 'vue-router'
 //数据类型
 interface RuleForm {
   title: string
+  add_time: number
 }
 
 export default defineComponent({
@@ -55,6 +56,7 @@ export default defineComponent({
     //数据对象
     const ruleForm: RuleForm = reactive({
       title: '',
+      add_time: new Date().getTime(),
     })
 
     //表单refs dom对象
