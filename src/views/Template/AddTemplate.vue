@@ -68,7 +68,10 @@ export default defineComponent({
         if (valid) {
           let record = null
           //查找记录
-          await db.template.findOne(ruleForm).then((res: any) => {
+          let query = {
+            title: ruleForm.title,
+          }
+          await db.template.findOne(query).then((res: any) => {
             record = res
           })
           //如果没有记录

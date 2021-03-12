@@ -20,10 +20,17 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref, getCurrentInstance } from 'vue'
-import { useRouter } from 'vue-router'
+import {
+  defineComponent,
+  reactive,
+  ref,
+  getCurrentInstance,
+  onMounted,
+} from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 //数据类型
 interface RuleForm {
+  _id: string
   title: string
   add_time: number
 }
@@ -33,6 +40,7 @@ export default defineComponent({
   setup() {
     //定义router
     const router = useRouter()
+    const route = useRoute()
 
     //当前组件实例
     const internalInstance = getCurrentInstance()
@@ -55,6 +63,7 @@ export default defineComponent({
 
     //数据对象
     const ruleForm: RuleForm = reactive({
+      _id: route.query._id as string,
       title: '',
       add_time: global.$moment().format('YYYY-MM-DD h:mm:ss'),
     })
@@ -68,24 +77,29 @@ export default defineComponent({
         if (valid) {
           let record = null
           //查找记录
-          await db.template.findOne(ruleForm).then((res: any) => {
+          let query = {
+            title: ruleForm.title,
+          }
+          await db.template.findOne(query).then((res: any) => {
             record = res
           })
           //如果没有记录
           if (!record) {
-            //新增一条记录到数据库
+            let query = { _id: ruleForm._id }
+            let update = { title: ruleForm.title }
+            //更新
             await db.template
-              .insert(ruleForm)
+              .update(query, { $set: update }, { upsert: true })
               .then((res: any) => {
                 global.$message.success({
-                  message: '添加成功',
+                  message: '保存成功',
                 })
                 router.back()
               })
               .catch((err: any) => {})
           } else {
             global.$message.error({
-              message: '添加失败，模板名称重复',
+              message: '保存失败',
             })
           }
         } else {
@@ -99,7 +113,28 @@ export default defineComponent({
       ruleFormRef.value.resetFields()
     }
 
-    return { router, rules, ruleForm, ruleFormRef, submitForm, resetForm }
+    //获取详情
+    const getTemplateDetail = async () => {
+      let query = { _id: ruleForm._id }
+      await db.template.findOne(query).then((res: any) => {
+        ruleForm.title = res.title
+      })
+    }
+
+    onMounted(async () => {
+      await getTemplateDetail()
+    })
+
+    return {
+      router,
+      route,
+      rules,
+      ruleForm,
+      ruleFormRef,
+      submitForm,
+      resetForm,
+      getTemplateDetail,
+    }
   },
 })
 </script>

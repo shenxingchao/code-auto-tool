@@ -113,8 +113,8 @@ class Db<T> {
   /**
    * 更新符合条件的记录
    * @param query | object 查找条件
-   * @param update | 更新的数据
-   * @param options | 配置 {multi: true} 更新多个 upsert(默认为false)，如果query没有匹配到结果集，
+   * @param update | 更新的数据 {$set:update} 只修改要修改的值 不会替换整条记录
+   * @param options | 配置 {multi: true} 更新多个 upsert(默认为false)属性混入的意思，如果query没有匹配到结果集，
    * 有两种情况需要考虑，一个是update是一个简单的对象(不包含任何修饰符)，另一种情况是带有修饰符，对第一种情况会直接将该文档插入，对第二种情况会将通过修饰符更改后的文档插入
    * $inc 自增 入栈 出栈 等等 基本都有了 # https://github.com/louischatriot/nedb#updating-documents
    * @returns
