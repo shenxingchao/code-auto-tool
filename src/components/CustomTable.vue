@@ -2,8 +2,8 @@
   <el-row v-if="showFilter||showSearch" class="check-cloumn-container">
     <slot v-if="showSearch" name="searchBar"></slot>
   </el-row>
-  <el-table ref="multipleTableRef" :data="data" :row-key="hanldeRowKey" border fit default-expand-all size="mini"
-            tooltip-effect="dark" style="width: 100%" @row-click="handleRowClick" @select="handleSelect"
+  <el-table ref="multipleTableRef" :data="data" :row-key="hanldeRowKey" :border="false" fit default-expand-all
+            size="mini" tooltip-effect="dark" @row-click="handleRowClick" @select="handleSelect"
             @select-all="handleSelectAll" @selection-change="handleSelectionChange" @row-dblclick="handleRowDblClick">
     <!-- 多选框checkbox -->
     <el-table-column v-if="showSelection" type="selection" width="55">

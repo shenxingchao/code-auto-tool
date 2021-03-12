@@ -4,6 +4,23 @@
   align-items: center;
 }
 
+//重置表格颜色
 .el-table thead {
   color: $h1c !important;
+}
+
+//重置表格边框 需border属性设为false
+.el-table::before {
+  height: 0;
+}
+table {
+  border: none !important;
+  border-collapse: collapse !important;
+}
+.el-table th {
+  border: $border;
+  border-bottom: none !important;
+}
+.el-table td {
+  border: $border;
 }
