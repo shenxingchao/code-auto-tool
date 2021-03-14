@@ -2,7 +2,6 @@
   <div class="app-container">
     <el-row class="tool-btn-group" type="flex" justify="start">
       <svg-icon name="back" className="icon" @click="router.back()" />
-      <svg-icon name="add" className="icon" @click="router.push('/Template/AddTemplate')" />
     </el-row>
     <custome-table :data="list" :table-head="table_head" :params="params" :show-selection="true" :isRadio="false"
                    :optWidth="180" :showOpt="true" @handleSizeChange="handleSizeChange"

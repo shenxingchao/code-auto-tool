@@ -11,7 +11,9 @@
             <el-input v-model="ruleForm.title" placeholder="标题" />
           </el-form-item>
           <el-form-item label="基础模板内容" prop="base_content">
-            <el-input type="textarea" autosize placeholder="请输入基础模板内容" v-model="ruleForm.base_content" />
+            <el-input type="textarea" autosize
+                      placeholder="请输入基础模板内容,固定基础控件变量{$content}，循环控件变量名称可以自定义，比如{$for1},那么循环控件的名称就是这个模板变量"
+                      v-model="ruleForm.base_content" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm()">确定</el-button>

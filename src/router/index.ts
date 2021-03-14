@@ -30,6 +30,32 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Template/EditTemplate.vue')
       }
     ]
+  },
+  //控件管理
+  {
+    path: '/Control',
+    name: 'Control',
+    component: () => import('@/views/Control/Control.vue'),
+    children: [
+      //模板列表
+      {
+        path: '/Control/ControlList',
+        name: 'ControlList',
+        component: () => import('@/views/Control/ControlList.vue')
+      },
+      //添加模板
+      {
+        path: '/Control/AddControl',
+        name: 'AddControl',
+        component: () => import('@/views/Control/AddControl.vue')
+      }
+      //编辑模板
+      // {
+      //   path: '/Control/EditControl',
+      //   name: 'EditControl',
+      //   component: () => import('@/views/Control/EditControl.vue')
+      // }
+    ]
   }
 ]
 
