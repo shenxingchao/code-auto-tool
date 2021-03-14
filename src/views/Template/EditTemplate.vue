@@ -10,6 +10,9 @@
           <el-form-item label="标题" prop="title">
             <el-input v-model="ruleForm.title" placeholder="标题" />
           </el-form-item>
+          <el-form-item label="基础模板内容" prop="base_content">
+            <el-input type="textarea" autosize placeholder="请输入基础模板内容" v-model="ruleForm.base_content" />
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm()">确定</el-button>
             <el-button @click="resetForm()">重置</el-button>
@@ -32,6 +35,7 @@ import { useRouter, useRoute } from 'vue-router'
 interface RuleForm {
   _id: string
   title: string
+  base_content: string
   add_time: number
 }
 
@@ -65,6 +69,7 @@ export default defineComponent({
     const ruleForm: RuleForm = reactive({
       _id: route.query._id as string,
       title: '',
+      base_content: '',
       add_time: global.$moment().format('YYYY-MM-DD h:mm:ss'),
     })
 
@@ -78,6 +83,7 @@ export default defineComponent({
           let record = null
           //查找记录
           let query = {
+            _id: { $ne: ruleForm._id },
             title: ruleForm.title,
           }
           await db.template.findOne(query).then((res: any) => {
@@ -86,7 +92,11 @@ export default defineComponent({
           //如果没有记录
           if (!record) {
             let query = { _id: ruleForm._id }
-            let update = { title: ruleForm.title }
+            let update = {
+              title: ruleForm.title,
+              base_content: ruleForm.base_content,
+            }
+            console.log(update)
             //更新
             await db.template
               .update(query, { $set: update }, { upsert: true })
@@ -118,6 +128,7 @@ export default defineComponent({
       let query = { _id: ruleForm._id }
       await db.template.findOne(query).then((res: any) => {
         ruleForm.title = res.title
+        ruleForm.base_content = res.base_content
       })
     }
 

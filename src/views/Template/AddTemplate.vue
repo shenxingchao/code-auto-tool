@@ -10,6 +10,9 @@
           <el-form-item label="标题" prop="title">
             <el-input v-model="ruleForm.title" placeholder="标题" />
           </el-form-item>
+          <el-form-item label="基础模板内容" prop="base_content">
+            <el-input type="textarea" autosize placeholder="请输入基础模板内容" v-model="ruleForm.base_content" />
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm()">确定</el-button>
             <el-button @click="resetForm()">重置</el-button>
@@ -25,6 +28,7 @@ import { useRouter } from 'vue-router'
 //数据类型
 interface RuleForm {
   title: string
+  base_content: string
   add_time: number
 }
 
@@ -56,6 +60,7 @@ export default defineComponent({
     //数据对象
     const ruleForm: RuleForm = reactive({
       title: '',
+      base_content: '',
       add_time: global.$moment().format('x'),
     })
 

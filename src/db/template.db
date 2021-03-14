@@ -1,2 +1,2 @@
-{"title":"Vue3组件模板","add_time":"1615563811485","_id":"PwGajfyvRacoLO6J"}
-{"title":"Vue2组件模板","add_time":"1615563799843","_id":"i5usP9COzPpHueLW"}
+{"title":"Vue3组件模板","add_time":"1615563811485","_id":"PwGajfyvRacoLO6J","base_content":"<template>\n  <router-view />\n</template>\n<script lang=\"ts\">\nimport { defineComponent } from 'vue'\n\nexport default defineComponent({\n  name: 'Template',\n  setup() {},\n})\n</script>\n"}
+{"title":"Vue2组件模板","add_time":"1615563799843","_id":"i5usP9COzPpHueLW","base_content":"<template>\n  <router-view />\n</template>\n<script lang=\"ts\">\nimport { defineComponent } from 'vue'\n\nexport default defineComponent({\n  name: 'Template',\n  setup() {},\n})\n</script>\n"}

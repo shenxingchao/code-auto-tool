@@ -24,9 +24,6 @@
         </el-form>
       </template>
       <template v-slot:opt="slotProps">
-        <el-button size="mini" type="success" icon="el-icon-document"
-                   @click.stop="router.push({path:'/Template/EditBaseTemplate',query:{template_id:slotProps.scope.row._id}})">
-        </el-button>
         <el-button size="mini" type="warning" icon="el-icon-document-checked"
                    @click.stop="router.push({path:'/Template/ControlList',query:{template_id:slotProps.scope.row._id}})">
         </el-button>
@@ -45,7 +42,6 @@ import {
 } from 'vue'
 import { useRouter } from 'vue-router'
 import CustomeTable from '@/components/CustomTable.vue'
-import Template from './Template.vue'
 //列表
 interface List {
   _id: string
@@ -72,7 +68,6 @@ export default defineComponent({
   name: 'TemplateList',
   components: {
     CustomeTable,
-    Template,
   },
   setup() {
     //定义router
