@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
     <el-row class="tool-btn-group" type="flex" justify="start">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/Control/ControlList' }">控件管理</el-breadcrumb-item>
+        <el-breadcrumb-item>控件列表</el-breadcrumb-item>
+      </el-breadcrumb>
       <svg-icon name="back" className="icon" @click="router.back()" />
     </el-row>
     <custome-table :data="list" :table-head="table_head" :params="params" :show-selection="true" :isRadio="false"
