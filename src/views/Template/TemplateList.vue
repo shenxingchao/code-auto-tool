@@ -5,7 +5,7 @@
       <svg-icon name="add" className="icon" @click="router.push('/Template/AddTemplate')" />
     </el-row>
     <custome-table :data="list" :table-head="table_head" :params="params" :show-selection="true" :isRadio="false"
-                   :optWidth="280" :showOpt="true" @handleSizeChange="handleSizeChange"
+                   :optWidth="180" :showOpt="true" @handleSizeChange="handleSizeChange"
                    @handleCurrentChange="handleCurrentChange" @handleSelectionChange="handleSelectionChange"
                    @handleRowDblClick="handleRowDblClick" @handleEdit="handleEdit" @handleDelete="handleDelete">
       <template v-slot:searchBar>
@@ -25,7 +25,7 @@
       </template>
       <template v-slot:opt="slotProps">
         <el-button size="mini" type="warning" icon="el-icon-document-checked"
-                   @click.stop="router.push({path:'/Template/ControlList',query:{template_id:slotProps.scope.row._id}})">
+                   @click.stop="router.push({path:'/Control/ControlList',query:{template_id:slotProps.scope.row._id}})">
         </el-button>
       </template>
     </custome-table>
@@ -89,7 +89,7 @@ export default defineComponent({
       {
         label: '编号',
         prop: '_id',
-        width: 80,
+        width: 150,
       },
       {
         label: '名称',
