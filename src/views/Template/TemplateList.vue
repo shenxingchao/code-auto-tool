@@ -129,13 +129,14 @@ export default defineComponent({
     const getTemplateList = async () => {
       //搜索条件
       let query: any = {}
+      //使用$and条件可扩展匹配多个
+      query.$and = []
       if (data.params.keyword != '') {
-        query.$or = []
-        //使用$or条件可扩展匹配多个
-        query.$or.push({
+        query.$and.push({
           title: new RegExp('.*?' + data.params.keyword + '.*?'),
         })
       }
+
       //获取总数
       await db.template.count(query).then((res: any) => {
         data.params.total = res

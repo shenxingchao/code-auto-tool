@@ -17,6 +17,12 @@
           <el-form-item prop="keyword">
             <el-input v-model="params.keyword" placeholder="搜索关键词" />
           </el-form-item>
+          <el-form-item prop="type">
+            <el-select v-model="params.type" placeholder="请选择控件类型" clearable>
+              <el-option v-for="item in type_options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="onSubmit">查询</el-button>
             <el-button icon="el-icon-refresh-left" @click="onReset">重置
@@ -56,6 +62,7 @@ interface Params {
   page_sizes: number[] //分页数量选择
   total: number //总数
   keyword: string //搜索关键词
+  type: number | string //控件类型 枚举值 1基础控件 2循环控件
 }
 
 //数据
@@ -117,6 +124,18 @@ export default defineComponent({
       },
     ]
 
+    //控件类型
+    const type_options = [
+      {
+        label: '基础控件',
+        value: 1,
+      },
+      {
+        label: '循环控件',
+        value: 2,
+      },
+    ]
+
     //数据对象
     let data: Data = reactive({
       list: [],
@@ -126,6 +145,7 @@ export default defineComponent({
         page_sizes: [10, 20, 30, 50],
         total: 0,
         keyword: '',
+        type: '',
       },
       selection_id_list: [],
     })
@@ -134,11 +154,16 @@ export default defineComponent({
     const getControlList = async () => {
       //搜索条件
       let query: any = {}
+      //使用$and条件可扩展匹配多个
+      query.$and = [{ template_id: route.query.template_id }]
       if (data.params.keyword != '') {
-        query.$or = []
-        //使用$or条件可扩展匹配多个
-        query.$or.push({
+        query.$and.push({
           title: new RegExp('.*?' + data.params.keyword + '.*?'),
+        })
+      }
+      if (data.params.type != '') {
+        query.$and.push({
+          type: data.params.type,
         })
       }
       //获取总数
@@ -275,6 +300,7 @@ export default defineComponent({
       route,
       searchFormRef,
       table_head,
+      type_options,
       ...toRefs(data),
       getControlList,
       handleSizeChange,
