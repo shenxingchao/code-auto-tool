@@ -9,7 +9,7 @@
       <svg-icon name="back" className="icon" @click="router.back()" />
     </el-row>
     <el-row type="flex" justify="center">
-      <el-col :xs="24" :md="18">
+      <el-col :md="18">
         <el-form ref="ruleFormRef" :rules="rules" :model="ruleForm" label-position="right" label-width="150px"
                  @submit.prevent>
           <el-form-item label="控件标题" prop="title">
