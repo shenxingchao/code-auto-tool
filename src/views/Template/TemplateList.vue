@@ -170,44 +170,81 @@ export default defineComponent({
     }
 
     //删除
-    const handleDelete = async (index: number, row: any) => {
-      //删除条件 单个id
-      let query = {
-        _id: row._id,
-      }
-      //删除操作
-      await db.template.remove(query, { multi: true }).then((res: any) => {
-        if (res > 0) {
-          global.$message.success({
-            message: '删除成功',
+    const handleDelete = (index: number, row: any) => {
+      global
+        .$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+        .then(async () => {
+          //删除模板先删除添加的控件
+          let control_query = {
+            template_id: row._id,
+          }
+          //删除控件操作
+          await db.control
+            .remove(control_query, { multi: true })
+            .then((res: any) => {})
+          //删除条件 单个id
+          let query = {
+            _id: row._id,
+          }
+          //删除操作
+          await db.template.remove(query, { multi: true }).then((res: any) => {
+            if (res > 0) {
+              global.$message.success({
+                message: '删除成功',
+              })
+            }
           })
-        }
-      })
-      getTemplateList()
+          getTemplateList()
+        })
+        .catch(() => {
+          global.$message.error({
+            message: '已取消删除',
+          })
+        })
     }
 
     //删除选中的记录
-    const handleDeleteRows = async () => {
-      if (data.selection_id_list.length == 0) {
-        global.$message.error({
-          message: '请选择要删除的数据',
-          type: 'error',
+    const handleDeleteRows = () => {
+      global
+        .$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
         })
-        return false
-      }
-      //删除条件 id数组
-      let query = {
-        _id: { $in: data.selection_id_list },
-      }
-      //删除操作
-      await db.template.remove(query, { multi: true }).then((res: any) => {
-        if (res > 0) {
-          global.$message.success({
-            message: '删除成功',
+        .then(async () => {
+          if (data.selection_id_list.length == 0) {
+            global.$message.error({
+              message: '请选择要删除的数据',
+              type: 'error',
+            })
+            return false
+          }
+          //删除条件 id数组
+          let query = {
+            _id: { $in: data.selection_id_list },
+          }
+          //删除操作
+          await db.template.remove(query, { multi: true }).then((res: any) => {
+            if (res > 0) {
+              global.$message.success({
+                message: '删除成功',
+              })
+            }
           })
-        }
-      })
-      getTemplateList()
+          getTemplateList()
+          global.$message.success({
+            message: '删除成功!',
+          })
+        })
+        .catch(() => {
+          global.$message.error({
+            message: '已取消删除',
+          })
+        })
     }
 
     //搜索

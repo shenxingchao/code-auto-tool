@@ -1,1 +1,0 @@
-{"template_id":"PwGajfyvRacoLO6J","title":"单行文本控件","type":1,"content":"<el-form-item label=\"{$comment}\" prop=\"{$name}\">\n            <el-input v-model=\"ruleForm.{$name}\" placeholder=\"请输入{$comment}\" />\n          </el-form-item>","add_time":"1615736901199","_id":"WseIj4VnKG3CmeTO"}
