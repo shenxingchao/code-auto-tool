@@ -3,7 +3,8 @@
     <el-row class="tool-btn-group" type="flex" justify="start">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/Control/ControlList' }">控件管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/Control/ControlList',query:{template_id:ruleForm.template_id} }">控件管理
+        </el-breadcrumb-item>
         <el-breadcrumb-item>编辑控件</el-breadcrumb-item>
       </el-breadcrumb>
       <svg-icon name="back" className="icon" @click="router.back()" />
@@ -166,6 +167,7 @@ export default defineComponent({
         ruleForm.title = res.title
         ruleForm.type = res.type
         ruleForm.content = res.content
+        ruleForm.template_id = res.template_id
       })
     }
 
