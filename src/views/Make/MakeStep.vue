@@ -33,7 +33,7 @@
           <el-row v-for="(item,index) in ruleForm.list" :key="item.id" class="block" type="flex" :gutter="24"
                   align="middle">
             <el-col :span="5">
-              <el-select v-model="item._id" placeholder="选择控件" @change="handleChangeControl(index)">
+              <el-select v-model="item._id" placeholder="选择控件" @change="(val)=>{handleChangeControl(val,index)}">
                 <el-option v-for="item in control_options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -85,6 +85,9 @@ import {
 
 import { useRouter, useRoute } from 'vue-router'
 
+//从渲染器进程到主进程的异步通信
+import { clipboard } from 'electron'
+
 //option label-value类型
 interface LabelValue {
   label: string
@@ -106,15 +109,16 @@ interface Control {
 interface RuleForm {
   template_id: string //模板id
   base_content: string //基础模板内容
-  list: Control[]
+  list: Control[] //变量列表
 }
 
 //数据
 interface Data {
-  step_active: number
-  template_options: LabelValue[]
-  control_options: LabelValue[]
-  ruleForm: RuleForm
+  step_active: number //步骤index
+  template_options: LabelValue[] //模板下拉列表
+  control_options: LabelValue[] //控件下拉列表
+  for_control_list: Control[] //循环控件列表
+  ruleForm: RuleForm //表单数据
 }
 
 export default defineComponent({
@@ -139,6 +143,7 @@ export default defineComponent({
       step_active: 0,
       template_options: [],
       control_options: [],
+      for_control_list: [],
       ruleForm: {
         template_id: '',
         base_content: '',
@@ -177,6 +182,8 @@ export default defineComponent({
       data.ruleForm.base_content = ''
       //清空控件
       data.control_options = []
+      //清空模板控件
+      data.for_control_list = []
       //清空选择的控件
       data.ruleForm.list = [
         {
@@ -205,6 +212,14 @@ export default defineComponent({
           })
         })
       })
+      //查找循环控件
+      query = {
+        template_id: template_id,
+        type: 2,
+      }
+      await db.control.find(query, { add_time: -1 }).then((res: any) => {
+        data.for_control_list = res
+      })
       //获取当前模板内容
       query = { _id: template_id }
       await db.template.findOne(query).then((res: any) => {
@@ -214,7 +229,10 @@ export default defineComponent({
 
     //切换选择控件
     const handleChangeControl = async (val: string, index: number) => {
-      console.log(val, index)
+      let control: any = data.control_options.find(
+        (item: any) => item.value == val
+      )
+      data.ruleForm.list[index].content = control.content
     }
 
     //添加字段
@@ -241,25 +259,43 @@ export default defineComponent({
     const handleClickMake = async () => {
       //获取当前基础模板内容
       let base_content = data.ruleForm.base_content
+      //替换基础内容的字符串
+      let content_str = ''
       //查找是否有{$content}内容模板变量,若有则替换基础控件
       if (base_content.includes('{$content}')) {
         //去除没有选择控件的数组
         let list = data.ruleForm.list.filter((item: any) => {
           return item._id != ''
         })
-
-        list.forEach((item: any) => {
-          item.content
-            .replaceAll('{$name}', item.name)
-            .replaceAll('{$type}', item.type)
-            .replaceAll('{$value}', item.value)
-            .replaceAll('{$comment}', item.comment)
+        //循环替换
+        list.forEach((element: any) => {
+          content_str += element.content
+            .replaceAll('{$name}', element.name)
+            .replaceAll('{$type}', element.type)
+            .replaceAll('{$value}', element.value)
+            .replaceAll('{$comment}', element.comment)
         })
       }
-
-      console.log(base_content)
+      base_content = base_content.replace('{$content}', content_str)
       //获取当前模板的所有循环控件，并循环查找模板是否有循环控件名称，有则替换
-      //输出文件
+      data.for_control_list.forEach((element: any) => {
+        let for_content_str = ''
+        //如基础模板有{$for1} 循环控件的标题也是{$for1}
+        if (base_content.includes(element.title)) {
+          data.ruleForm.list.forEach((ele: any) => {
+            for_content_str +=
+              element.content
+                .replaceAll('{$name}', ele.name)
+                .replaceAll('{$type}', ele.type)
+                .replaceAll('{$value}', ele.value)
+                .replaceAll('{$comment}', ele.comment) + '\n'
+          })
+        }
+        base_content = base_content.replace(element.title, for_content_str)
+      })
+      //复制到剪贴板
+      clipboard.writeText(base_content)
+      global.$message.success({ message: '生成代码已复制到剪贴板ctrl+v粘贴' })
     }
 
     //相当于mounted
