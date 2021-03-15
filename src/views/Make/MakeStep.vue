@@ -32,8 +32,8 @@
         <el-col :md="16">
           <el-row v-for="(item,index) in ruleForm.list" :key="item.id" class="block" type="flex" :gutter="24"
                   align="middle">
-            <el-col :span="6">
-              <el-select v-model="item._id" placeholder="选择控件">
+            <el-col :span="5">
+              <el-select v-model="item._id" placeholder="选择控件" @change="handleChangeControl(index)">
                 <el-option v-for="item in control_options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -47,7 +47,7 @@
             <el-col :span="3">
               <el-input v-model="item.value" placeholder="默认值" />
             </el-col>
-            <el-col :span="4">
+            <el-col :span="5">
               <el-input v-model="item.comment" placeholder="注释" />
             </el-col>
             <el-col :span="2" v-if="index!=0">
@@ -68,7 +68,7 @@
         <el-button v-if="step_active < 2" :disabled="step_active==0&&ruleForm.template_id==''" @click="step_active++">
           下一步
         </el-button>
-        <el-button v-if="step_active == 2" type="warning">生成代码</el-button>
+        <el-button v-if="step_active == 2" type="warning" @click="handleClickMake">生成代码</el-button>
       </el-row>
     </div>
   </div>
@@ -89,6 +89,7 @@ import { useRouter, useRoute } from 'vue-router'
 interface LabelValue {
   label: string
   value: string
+  content?: string //控件内容 可选属性
 }
 
 //控件类型
@@ -98,11 +99,13 @@ interface Control {
   type: string //变量类型
   value: string //默认值
   comment: string //注释
+  content: string //注释
 }
 
 //数据类型
 interface RuleForm {
-  template_id: string
+  template_id: string //模板id
+  base_content: string //基础模板内容
   list: Control[]
 }
 
@@ -138,6 +141,7 @@ export default defineComponent({
       control_options: [],
       ruleForm: {
         template_id: '',
+        base_content: '',
         list: [
           {
             _id: '',
@@ -145,6 +149,7 @@ export default defineComponent({
             type: '',
             value: '',
             comment: '',
+            content: '',
           },
         ],
       },
@@ -155,7 +160,7 @@ export default defineComponent({
       //搜索条件
       let query: any = {}
 
-      //分页获取记录
+      //获取所有模板
       await db.template.find(query, { add_time: -1 }).then((res: any) => {
         res.forEach((element: any) => {
           data.template_options.push({
@@ -168,6 +173,8 @@ export default defineComponent({
 
     //切换模板 赋值控件选项
     const handleChangeTemplate = async (val: string) => {
+      //清空模板内容
+      data.ruleForm.base_content = ''
       //清空控件
       data.control_options = []
       //清空选择的控件
@@ -178,12 +185,13 @@ export default defineComponent({
           type: '',
           value: '',
           comment: '',
+          content: '',
         },
       ]
 
       let template_id = val
       //查询条件 只显示基础控件
-      let query = {
+      let query: any = {
         template_id: template_id,
         type: 1,
       }
@@ -193,9 +201,20 @@ export default defineComponent({
           data.control_options.push({
             label: element.title,
             value: element._id,
+            content: element.content,
           })
         })
       })
+      //获取当前模板内容
+      query = { _id: template_id }
+      await db.template.findOne(query).then((res: any) => {
+        data.ruleForm.base_content = res.base_content
+      })
+    }
+
+    //切换选择控件
+    const handleChangeControl = async (val: string, index: number) => {
+      console.log(val, index)
     }
 
     //添加字段
@@ -206,6 +225,7 @@ export default defineComponent({
         type: '',
         value: '',
         comment: '',
+        content: '',
       })
     }
 
@@ -215,6 +235,31 @@ export default defineComponent({
       data.ruleForm.list = data.ruleForm.list.filter(
         (item, index) => index != key
       )
+    }
+
+    //生成代码
+    const handleClickMake = async () => {
+      //获取当前基础模板内容
+      let base_content = data.ruleForm.base_content
+      //查找是否有{$content}内容模板变量,若有则替换基础控件
+      if (base_content.includes('{$content}')) {
+        //去除没有选择控件的数组
+        let list = data.ruleForm.list.filter((item: any) => {
+          return item._id != ''
+        })
+
+        list.forEach((item: any) => {
+          item.content
+            .replaceAll('{$name}', item.name)
+            .replaceAll('{$type}', item.type)
+            .replaceAll('{$value}', item.value)
+            .replaceAll('{$comment}', item.comment)
+        })
+      }
+
+      console.log(base_content)
+      //获取当前模板的所有循环控件，并循环查找模板是否有循环控件名称，有则替换
+      //输出文件
     }
 
     //相当于mounted
@@ -228,8 +273,10 @@ export default defineComponent({
       ...toRefs(data),
       getTemplateList,
       handleChangeTemplate,
+      handleChangeControl,
       handleAddField,
       handleDeleteField,
+      handleClickMake,
     }
   },
 })
