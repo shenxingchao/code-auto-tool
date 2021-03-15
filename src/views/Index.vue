@@ -4,7 +4,7 @@
       <el-button class="btn" type="primary" @click="handleClickTemplateList()">
         <svg-icon name="template_list" className="icon" />模板管理
       </el-button>
-      <el-button class="btn" type="warning">
+      <el-button class="btn" type="warning" @click="router.push('/Make/MakeStep')">
         <svg-icon name="make" className="icon" />生成
       </el-button>
     </div>
@@ -27,13 +27,14 @@ export default defineComponent({
 
     //定义router
     const router = useRouter()
+    const route = useRoute()
 
     //模板管理
     const handleClickTemplateList = () => {
       router.push('/Template/TemplateList')
     }
 
-    return { handleClickTemplateList }
+    return { router, route, handleClickTemplateList }
   },
 })
 </script>

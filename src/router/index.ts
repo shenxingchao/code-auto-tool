@@ -56,6 +56,19 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Control/EditControl.vue')
       }
     ]
+  },
+  {
+    path: '/Make',
+    name: 'Make',
+    component: () => import('@/views/Make/Make.vue'),
+    children: [
+      //生产步骤页
+      {
+        path: '/Make/MakeStep',
+        name: 'MakeStep',
+        component: () => import('@/views/Make/MakeStep.vue')
+      }
+    ]
   }
 ]
 
