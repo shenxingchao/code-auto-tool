@@ -1,0 +1,6 @@
+{"template_id":"2UlGUVRStySXsUwX","title":"4","type":1,"content":"5","add_time":"1615775359356","_id":"tGSSTdFg0CBElRgA"}
+{"template_id":"2UlGUVRStySXsUwX","title":"44","type":1,"content":"55","add_time":"1615775359356","_id":"tGSSTdFg0CBElRgA"}
+{"template_id":"2UlGUVRStySXsUwX","title":"444","type":2,"content":"555","add_time":"1615775359356","_id":"tGSSTdFg0CBElRgA"}
+{"template_id":"2UlGUVRStySXsUwX","title":"input text","type":1,"content":"       <el-form-item label=\"{$comment}\" prop=\"{$name}\">\n            <el-input v-model=\"ruleForm.{$name}\" placeholder=\"{$comment}\" />\n          </el-form-item>","add_time":"1615775359356","_id":"tGSSTdFg0CBElRgA"}
+{"template_id":"2UlGUVRStySXsUwX","title":"input text","type":1,"content":"       <el-form-item label=\"{$comment}\" prop=\"{$name}\">\n            <el-input type=\"text\" v-model=\"ruleForm.{$name}\" placeholder=\"{$comment}\" />\n          </el-form-item>","add_time":"1615775359356","_id":"tGSSTdFg0CBElRgA"}
+{"title":"input number","type":1,"content":"       <el-form-item label=\"{$comment}\" prop=\"{$name}\">\n            <el-input type=\"number\" v-model=\"ruleForm.{$name}\" placeholder=\"{$comment}\" />\n          </el-form-item>","add_time":"1615776295424","_id":"z2SX1ctkpSeUUciH"}

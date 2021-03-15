@@ -9,7 +9,7 @@
       <svg-icon name="back" className="icon" @click="router.back()" />
     </el-row>
     <custome-table :data="list" :table-head="table_head" :params="params" :show-selection="true" :isRadio="false"
-                   :optWidth="180" :showOpt="true" @handleSizeChange="handleSizeChange"
+                   :optWidth="120" :showOpt="true" @handleSizeChange="handleSizeChange"
                    @handleCurrentChange="handleCurrentChange" @handleSelectionChange="handleSelectionChange"
                    @handleRowDblClick="handleRowDblClick" @handleEdit="handleEdit" @handleDelete="handleDelete">
       <template v-slot:searchBar>
@@ -98,6 +98,14 @@ export default defineComponent({
         prop: 'title',
       },
       {
+        label: '类型',
+        prop: 'type',
+        width: 80,
+        render: (row: any) => {
+          return row.type == 1 ? '基础控件' : '循环控件'
+        },
+      },
+      {
         label: '创建时间',
         prop: 'add_time',
         width: 150,
@@ -122,7 +130,7 @@ export default defineComponent({
       selection_id_list: [],
     })
 
-    //获取模板列表
+    //获取列表
     const getControlList = async () => {
       //搜索条件
       let query: any = {}
@@ -134,11 +142,11 @@ export default defineComponent({
         })
       }
       //获取总数
-      await db.template.count(query).then((res: any) => {
+      await db.control.count(query).then((res: any) => {
         data.params.total = res
       })
       //分页获取记录
-      await db.template
+      await db.control
         .limit(query, data.params.page, data.params.page_size, { add_time: -1 })
         .then((res: any) => {
           data.list = res
@@ -148,7 +156,6 @@ export default defineComponent({
     //切换选择数据
     const handleSelectionChange = (val: any[]) => {
       data.selection_id_list = val
-      console.log(val)
     }
 
     //双击编辑
@@ -167,44 +174,70 @@ export default defineComponent({
     }
 
     //删除
-    const handleDelete = async (index: number, row: any) => {
-      //删除条件 单个id
-      let query = {
-        _id: row._id,
-      }
-      //删除操作
-      await db.template.remove(query, { multi: true }).then((res: any) => {
-        if (res > 0) {
-          global.$message.success({
-            message: '删除成功',
+    const handleDelete = (index: number, row: any) => {
+      global
+        .$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+        .then(async () => {
+          //删除条件 单个id
+          let query = {
+            _id: row._id,
+          }
+          //删除操作
+          await db.control.remove(query, { multi: true }).then((res: any) => {
+            if (res > 0) {
+              global.$message.success({
+                message: '删除成功',
+              })
+            }
           })
-        }
-      })
-      getControlList()
+          getControlList()
+        })
+        .catch(() => {
+          global.$message.error({
+            message: '已取消删除',
+          })
+        })
     }
 
     //删除选中的记录
-    const handleDeleteRows = async () => {
-      if (data.selection_id_list.length == 0) {
-        global.$message.error({
-          message: '请选择要删除的数据',
-          type: 'error',
+    const handleDeleteRows = () => {
+      global
+        .$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
         })
-        return false
-      }
-      //删除条件 id数组
-      let query = {
-        _id: { $in: data.selection_id_list },
-      }
-      //删除操作
-      await db.template.remove(query, { multi: true }).then((res: any) => {
-        if (res > 0) {
-          global.$message.success({
-            message: '删除成功',
+        .then(async () => {
+          if (data.selection_id_list.length == 0) {
+            global.$message.error({
+              message: '请选择要删除的数据',
+              type: 'error',
+            })
+            return false
+          }
+          //删除条件 id数组
+          let query = {
+            _id: { $in: data.selection_id_list },
+          }
+          //删除操作
+          await db.control.remove(query, { multi: true }).then((res: any) => {
+            if (res > 0) {
+              global.$message.success({
+                message: '删除成功',
+              })
+            }
           })
-        }
-      })
-      getControlList()
+          getControlList()
+        })
+        .catch(() => {
+          global.$message.error({
+            message: '已取消删除',
+          })
+        })
     }
 
     //搜索
@@ -234,7 +267,7 @@ export default defineComponent({
 
     //相当于mounted
     onMounted(async () => {
-      // await getControlList()
+      await getControlList()
     })
 
     return {

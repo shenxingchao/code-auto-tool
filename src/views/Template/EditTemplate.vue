@@ -77,7 +77,7 @@ export default defineComponent({
       _id: route.query._id as string,
       title: '',
       base_content: '',
-      add_time: global.$moment().format('YYYY-MM-DD h:mm:ss'),
+      add_time: global.$moment().format('x'),
     })
 
     //表单refs dom对象
@@ -103,7 +103,7 @@ export default defineComponent({
               title: ruleForm.title,
               base_content: ruleForm.base_content,
             }
-            console.log(update)
+
             //更新
             await db.template
               .update(query, { $set: update }, { upsert: true })

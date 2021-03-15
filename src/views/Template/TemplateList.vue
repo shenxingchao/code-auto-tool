@@ -125,7 +125,7 @@ export default defineComponent({
       selection_id_list: [],
     })
 
-    //获取模板列表
+    //获取列表
     const getTemplateList = async () => {
       //搜索条件
       let query: any = {}
@@ -151,7 +151,6 @@ export default defineComponent({
     //切换选择数据
     const handleSelectionChange = (val: any[]) => {
       data.selection_id_list = val
-      console.log(val)
     }
 
     //双击编辑

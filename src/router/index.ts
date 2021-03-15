@@ -48,13 +48,13 @@ const routes: Array<RouteRecordRaw> = [
         path: '/Control/AddControl',
         name: 'AddControl',
         component: () => import('@/views/Control/AddControl.vue')
-      }
+      },
       //编辑模板
-      // {
-      //   path: '/Control/EditControl',
-      //   name: 'EditControl',
-      //   component: () => import('@/views/Control/EditControl.vue')
-      // }
+      {
+        path: '/Control/EditControl',
+        name: 'EditControl',
+        component: () => import('@/views/Control/EditControl.vue')
+      }
     ]
   }
 ]
