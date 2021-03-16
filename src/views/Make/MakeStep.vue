@@ -283,12 +283,15 @@ export default defineComponent({
         //如基础模板有{$for1} 循环控件的标题也是{$for1}
         if (base_content.includes(element.title)) {
           data.ruleForm.list.forEach((ele: any) => {
-            for_content_str +=
-              element.content
-                .replaceAll('{$name}', ele.name)
-                .replaceAll('{$type}', ele.type)
-                .replaceAll('{$value}', ele.value)
-                .replaceAll('{$comment}', ele.comment) + '\n'
+            if (ele.name != '') {
+              //填写的变量名不为空才视为有效变量
+              for_content_str +=
+                element.content
+                  .replaceAll('{$name}', ele.name)
+                  .replaceAll('{$type}', ele.type)
+                  .replaceAll('{$value}', ele.value)
+                  .replaceAll('{$comment}', ele.comment) + '\n'
+            }
           })
         }
         base_content = base_content.replace(element.title, for_content_str)
