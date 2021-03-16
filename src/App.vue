@@ -1,35 +1,23 @@
 <template>
-  <StatusBar>
+  <status-bar>
     <template v-slot:title>
       <div class="title" @click="router.push('/')">代码自动生成工具</div>
     </template>
-  </StatusBar>
-  <el-drawer custom-class="drawer" title="我是标题" v-model="store.state.setting.show_drawer" :with-header="false">
-    <el-row>
-      当前版本:{{package_json.version}}
-    </el-row>
-  </el-drawer>
+  </status-bar>
+  <drawer />
   <router-view />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 import StatusBar from '@/components/StatusBar.vue'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import Drawer from '@/components/Drawer.vue'
 
 export default defineComponent({
   components: {
     StatusBar,
+    Drawer,
   },
-  setup() {
-    const router = useRouter()
-    const store = useStore()
-
-    //获取版本号
-    let package_json = require('../package.json')
-
-    return { router, store, package_json }
-  },
+  setup() {},
 })
 </script>
 
