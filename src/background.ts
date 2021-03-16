@@ -133,7 +133,12 @@ if (isDevelopment) {
 //托盘图标
 let tray = null
 app.whenReady().then(() => {
-  tray = new Tray(path.join(__dirname, '../public/favicon.ico'))
+  tray = new Tray(
+    path.join(
+      __dirname,
+      isDevelopment ? '../public/favicon.ico' : './favicon.ico'
+    )
+  )
   const contextMenu = Menu.buildFromTemplate([
     {
       label: '退出',
