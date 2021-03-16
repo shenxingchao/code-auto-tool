@@ -143,9 +143,10 @@ app.whenReady().then(() => {
   })
 })
 
-//主进程监听渲染进程 最大化最小化操作
+//主进程监听渲染进程 最大化回复最小化关闭操作
 ipcMain.on('win-close', (event, arg) => {
-  BrowserWindow.getFocusedWindow()?.close()
+  win.hide()
+  // BrowserWindow.getFocusedWindow()?.close() //关闭了
 })
 
 ipcMain.on('win-max', (event, arg) => {
