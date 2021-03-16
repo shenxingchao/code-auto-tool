@@ -5,6 +5,9 @@
     </template>
   </StatusBar>
   <el-drawer custom-class="drawer" title="我是标题" v-model="store.state.setting.show_drawer" :with-header="false">
+    <el-row>
+      当前版本:{{package_json.version}}
+    </el-row>
   </el-drawer>
   <router-view />
 </template>
@@ -21,7 +24,11 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const store = useStore()
-    return { router, store }
+
+    //获取版本号
+    let package_json = require('../package.json')
+
+    return { router, store, package_json }
   },
 })
 </script>
@@ -37,7 +44,8 @@ export default defineComponent({
 .drawer {
   width: 40%;
   max-width: 300px;
-  padding-top: 40px !important;
+  padding: 20px;
+  padding-top: 60px;
   overflow: auto;
 }
 </style>
