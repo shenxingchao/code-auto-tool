@@ -29,11 +29,11 @@ const database = [
   {
     table_name: 'template',
     filename: path.join(remote.app.getPath('userData'), './template.db')
-  }, //表名, 表数据库文件路径  //生成环境用绝对路径E:/codetool/code-auto-tool/template.db
+  },
   {
     table_name: 'control',
     filename: path.join(remote.app.getPath('userData'), './control.db')
-  } //表名, 表数据库文件路径
+  }
   // { table_name: 'template', filename: './src/db/template.db' }, //表名, 表数据库文件路径  //生成环境用绝对路径E:/codetool/code-auto-tool/template.db
   // { table_name: 'control', filename: './src/db/control.db' } //表名, 表数据库文件路径
 ]
