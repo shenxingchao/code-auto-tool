@@ -8,7 +8,8 @@ import {
   MessageBoxReturnValue,
   ipcMain,
   Tray,
-  Menu
+  Menu,
+  globalShortcut
 } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension /*,{ VUEJS_DEVTOOLS }*/ from 'electron-devtools-installer'
@@ -105,6 +106,12 @@ app.on('ready', async () => {
     //   console.error('Vue Devtools failed to install:', e.toString())
     // }
   }
+  globalShortcut.register('CommandOrControl+Shift+i', function () {
+    return false
+  })
+  globalShortcut.register('CommandOrControl+Shift+x', function () {
+    win.webContents.openDevTools()
+  })
   createWindow()
 })
 
