@@ -28,6 +28,7 @@ export default defineComponent({
   padding-top: 40px;
   height: calc(100vh - 40px);
   overflow: auto;
+  background: $bg;
 }
 </style>
 <style lang="scss" scoped>
