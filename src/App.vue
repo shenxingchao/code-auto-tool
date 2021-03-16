@@ -29,13 +29,6 @@ export default defineComponent({
   overflow: auto;
   background: $bg;
 }
-.drawer {
-  width: 40%;
-  max-width: 300px;
-  padding: 20px;
-  padding-top: 60px;
-  overflow: auto;
-}
 </style>
 <style lang="scss" scoped>
 .title {
