@@ -4,6 +4,7 @@
       <slot name="title">默认标题</slot>
     </div>
     <div class="tool_btn">
+      <svg-icon name="setting" className="icon" @click="handleClickSetting" />
       <svg-icon name="mini" className="icon" id="minimize" />
       <svg-icon :name="max ? 'maxi_re' : 'maxi'" class="icon" id="maximize" />
       <svg-icon name="close" class="icon" id="winclose" />
@@ -13,14 +14,23 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 //从渲染器进程到主进程的异步通信
 import { ipcRenderer } from 'electron'
 
 export default defineComponent({
   name: 'StatusBar',
   setup() {
+    const store = useStore()
+
     //基本类型用这个
+    let drawer = ref(false)
     let max = ref(false)
+
+    const handleClickSetting = () => {
+      store.dispatch('handleChangeDrawer', !store.state.setting.show_drawer)
+    }
+
     onMounted(() => {
       //监听最大化状态变化 去改变最大化或者是恢复按钮
       ipcRenderer.send('listen-maximize')
@@ -46,7 +56,7 @@ export default defineComponent({
         ipcRenderer.send('win-min', '')
       })
     })
-    return { max }
+    return { store, drawer, max, handleClickSetting }
   },
 })
 </script>
@@ -76,16 +86,16 @@ export default defineComponent({
     align-items: center;
   }
   .tool_btn {
-    width: 100px;
+    width: 132px;
     height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .icon {
       -webkit-app-region: no-drag;
-      width: 16px;
-      height: 16px;
-      padding: 11px;
+      width: 20px;
+      height: 20px;
+      padding: 10px;
       fill: #ffffff;
       cursor: pointer;
       &:hover {
@@ -93,6 +103,12 @@ export default defineComponent({
       }
       &:active {
         background: $deep-theme;
+      }
+
+      &:first-child {
+        width: 28px;
+        height: 28px;
+        padding: 6px;
       }
     }
   }
