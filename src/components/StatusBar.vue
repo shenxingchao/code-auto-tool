@@ -5,9 +5,9 @@
     </div>
     <div class="tool_btn">
       <svg-icon name="setting" className="icon" @click="handleClickSetting" />
-      <svg-icon name="mini" className="icon" id="minimize" />
-      <svg-icon :name="max ? 'maxi_re' : 'maxi'" class="icon" id="maximize" />
-      <svg-icon name="close" class="icon" id="winclose" />
+      <svg-icon name="mini" className="icon" @click="handleClickToolBtn('minimize')" />
+      <svg-icon :name="max ? 'maxi_re' : 'maxi'" className="icon" @click="handleClickToolBtn('maximize')" />
+      <svg-icon name="close" className="icon" @click="handleClickToolBtn('winclose')" />
     </div>
     <div class="title_line"></div>
   </div>
@@ -31,32 +31,34 @@ export default defineComponent({
       store.dispatch('handleChangeDrawer', !store.state.setting.show_drawer)
     }
 
+    const handleClickToolBtn = (type: string) => {
+      switch (type) {
+        // 最小化
+        case 'minimize':
+          ipcRenderer.send('win-min', '')
+          break
+        // 最大化
+        case 'maximize':
+          ipcRenderer.send('win-max', '')
+          break
+        // 关闭
+        case 'winclose':
+          ipcRenderer.send('win-close', '')
+          break
+
+        default:
+          break
+      }
+    }
+
     onMounted(() => {
       //监听最大化状态变化 去改变最大化或者是恢复按钮
       ipcRenderer.send('listen-maximize')
       ipcRenderer.on('maximize-change', (event, arg) => {
         max.value = arg
       })
-
-      // 关闭
-      let close = document.getElementById('winclose')
-      close?.addEventListener('click', function () {
-        ipcRenderer.send('win-close', '')
-      })
-
-      // 最大化
-      let maximize = document.getElementById('maximize')
-      maximize?.addEventListener('click', function () {
-        ipcRenderer.send('win-max', '')
-      })
-
-      // 最小化
-      let minimize = document.getElementById('minimize')
-      minimize?.addEventListener('click', function () {
-        ipcRenderer.send('win-min', '')
-      })
     })
-    return { store, drawer, max, handleClickSetting }
+    return { store, drawer, max, handleClickSetting, handleClickToolBtn }
   },
 })
 </script>
