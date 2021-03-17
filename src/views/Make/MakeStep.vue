@@ -27,7 +27,7 @@
         </el-col>
       </el-row>
     </div>
-    <div class="block" v-if="step_active == 1">
+    <div v-if="step_active == 1">
       <el-row type="flex" justify="center">
         <el-col :md="16">
           <el-row v-for="(item,index) in ruleForm.list" :key="item.id" class="block" type="flex" :gutter="24"
