@@ -1,4 +1,3 @@
-// @import './theme.scss' // 变量定义
 $theme: #c62f2f;
 $deep-theme: #ad0f0f;
 $light-theme: #eb5c5c;
@@ -8,6 +7,19 @@ $h2c: #555555;
 $h3c: #777777;
 $border: 1px solid #ececec;
 $bg: #fafafa;
+
+//其他主题变量 只用于切换主题
+$theme2: #409eff;
+$deep-theme2: #1463b3;
+$light-theme2: #66b1ff;
+
+$theme3: #2ba245;
+$deep-theme3: #137c2a;
+$light-theme3: #3fb837;
+
+$theme4: #967efd;
+$deep-theme4: #4c31c2;
+$light-theme4: #a692fc;
 
 :export {
   theme: $theme;
