@@ -4,20 +4,20 @@
       当前版本:{{package_json.version}}
     </el-row>
     <el-row class="block" type="flex" justify="space-between" align="middle">
-      <el-col :span="12">
-        <el-button size="mini" @click="handleClickChangeTheme(1)">切换主题1</el-button>
-      </el-col>
-      <el-col :span="12">
-        <el-button size="mini" @click="handleClickChangeTheme(2)">切换主题2</el-button>
-      </el-col>
+      <div>
+        <el-button size="mini" @click="handleClickChangeTheme(1)">默认红</el-button>
+      </div>
+      <div>
+        <el-button size="mini" @click="handleClickChangeTheme(2)">天空蓝</el-button>
+      </div>
     </el-row>
     <el-row class="block" type="flex" justify="space-between" align="middle">
-      <el-col :span="12">
-        <el-button size="mini" @click="handleClickChangeTheme(3)">切换主题3</el-button>
-      </el-col>
-      <el-col :span="12">
-        <el-button size="mini" @click="handleClickChangeTheme(4)">切换主题4</el-button>
-      </el-col>
+      <div>
+        <el-button size="mini" @click="handleClickChangeTheme(3)">青草绿</el-button>
+      </div>
+      <div>
+        <el-button size="mini" @click="handleClickChangeTheme(4)">炫酷紫</el-button>
+      </div>
     </el-row>
   </el-drawer>
 </template>
@@ -31,8 +31,8 @@ export default defineComponent({
     const store = useStore()
     //获取版本号
     let package_json = require('../../package.json')
-    const handleClickChangeTheme = (type: number) => {
-      document.body.className = 'theme' + type
+    const handleClickChangeTheme = (theme_type: number) => {
+      store.dispatch('handleChangeTheme', theme_type)
     }
 
     return { store, package_json, handleClickChangeTheme }
@@ -41,8 +41,8 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .drawer {
-  width: 300px;
-  max-width: 300px;
+  width: 200px;
+  max-width: 200px;
   padding: 20px;
   padding-top: 60px;
   overflow: auto;

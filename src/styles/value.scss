@@ -1,6 +1,7 @@
 $theme: #c62f2f;
 $deep-theme: #ad0f0f;
 $light-theme: #eb5c5c;
+$bg-theme: url('../assets/images/bg_theme.png') no-repeat;
 $white: #ffffff;
 $h1c: #333333;
 $h2c: #555555;
@@ -12,14 +13,17 @@ $bg: #fafafa;
 $theme2: #409eff;
 $deep-theme2: #1463b3;
 $light-theme2: #66b1ff;
+$bg-theme2: url('../assets/images/bg_theme2.png') no-repeat;
 
 $theme3: #2ba245;
 $deep-theme3: #137c2a;
 $light-theme3: #3fb837;
+$bg-theme3: url('../assets/images/bg_theme3.png') no-repeat;
 
 $theme4: #967efd;
 $deep-theme4: #4c31c2;
 $light-theme4: #a692fc;
+$bg-theme4: url('../assets/images/bg_theme4.png') no-repeat center center;
 
 :export {
   theme: $theme;

@@ -10,6 +10,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import StatusBar from '@/components/StatusBar.vue'
 import Drawer from '@/components/Drawer.vue'
 
@@ -20,7 +21,12 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
-    return { router }
+    const store = useStore()
+
+    //设置默认主题
+    store.dispatch('handleChangeTheme', store.state.setting.theme_type)
+
+    return { router, store }
   },
 })
 </script>

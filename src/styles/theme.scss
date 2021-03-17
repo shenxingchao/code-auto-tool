@@ -1,8 +1,8 @@
-@mixin theme($theme, $deep-theme, $light-theme) {
+@mixin theme($theme, $deep-theme, $light-theme, $bg-theme) {
   // 下面写需要该主题的文件
   //状态栏
   .title_bar {
-    background: $theme;
+    background: $bg-theme;
     .tool_btn {
       .icon {
         &:hover {
@@ -101,27 +101,31 @@
   @include theme(
     $theme !important,
     $deep-theme !important,
-    $light-theme !important
+    $light-theme !important,
+    $bg-theme !important
   );
 }
 .theme2 {
   @include theme(
     $theme2 !important,
     $deep-theme2 !important,
-    $light-theme2 !important
+    $light-theme2 !important,
+    $bg-theme2 !important
   );
 }
 .theme3 {
   @include theme(
     $theme3 !important,
     $deep-theme3 !important,
-    $light-theme3 !important
+    $light-theme3 !important,
+    $bg-theme3 !important
   );
 }
 .theme4 {
   @include theme(
     $theme4 !important,
     $deep-theme4 !important,
-    $light-theme4 !important
+    $light-theme4 !important,
+    $bg-theme4 !important
   );
 }
