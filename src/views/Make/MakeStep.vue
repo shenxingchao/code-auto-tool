@@ -1,13 +1,5 @@
 <template>
   <div class="app-container">
-    <el-row class="tool-btn-group" type="flex" justify="start">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/Make/MakeStep' }">生成</el-breadcrumb-item>
-        <el-breadcrumb-item>生成步骤</el-breadcrumb-item>
-      </el-breadcrumb>
-      <svg-icon name="back" className="icon" @click="router.back()" />
-    </el-row>
     <el-steps :active="step_active" align-center finish-status="success">
       <el-step title="选择模板"></el-step>
       <el-step title="设置变量"></el-step>

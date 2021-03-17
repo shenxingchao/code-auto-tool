@@ -1,13 +1,5 @@
 <template>
   <div class="app-container">
-    <el-row class="tool-btn-group" type="flex" justify="start">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/Template/TemplateList' }">模板管理</el-breadcrumb-item>
-        <el-breadcrumb-item>编辑模板</el-breadcrumb-item>
-      </el-breadcrumb>
-      <svg-icon name="back" className="icon" @click="router.back()" />
-    </el-row>
     <el-row type="flex" justify="center">
       <el-col :md="18">
         <el-form ref="ruleFormRef" :rules="rules" :model="ruleForm" label-position="right" label-width="150px"

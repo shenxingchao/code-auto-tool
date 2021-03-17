@@ -79,31 +79,46 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from) => {
+//路由前置钩子
+/* router.beforeEach((to, from) => {
   //旧路由数组,还没有push了
   let route_list: any[] = store.state.route_list
   //找到当前激活的路由
   let active_index = route_list.findIndex((item: any) => item.active == true)
 
-  //如果有路由数组且当前前往的路由是倒数第二个,那么就是返回上一页
-  //这里有个问题，假如我前进的页面正好是我返回的页面，比如我点了面包屑导航,解决方案是如果是push的时候，传个自定义参数过来，如果有这个参数，那么就是push路由  router.push :to=" query 和 parm的区别
-  if (
-    active_index &&
-    route_list.length > 1 &&
-    route_list[active_index - 1].path == to.path
-  ) {
-    route_list.forEach((element: any) => {
-      element.active = false
-    })
-    route_list[active_index - 1].active = true
+  if (active_index !== -1) {
+    //如果上一个页面的路径=要去的路径，那么就是返回
+    if (
+      route_list[active_index].from_path == to.path &&
+      route_list[active_index - 1]
+    ) {
+      route_list.forEach((element: any) => {
+        element.active = false
+      })
+      //找到要去的路径，置为active
+      route_list[active_index - 1].active = true
+    }
+    //如果下一个页面的路径=要去的路径，那么就是前进
+    else if (
+      route_list[active_index + 1] &&
+      route_list[active_index + 1].to_path == to.path
+    ) {
+      route_list.forEach((element: any) => {
+        element.active = false
+      })
+      //找到要去的路径，置为active
+      route_list[active_index + 1].active = true
+    } else {
+      route_list.forEach((element: any) => {
+        element.active = false
+      })
+      route_list.push({ to_path: to.path, from_path: from.path, active: true })
+    }
   } else {
-    //否则就是push了一个路由 并设为激活的路由
-    route_list.forEach((element: any) => {
-      element.active = false
-    })
-    route_list.push({ path: to.path, active: true })
+    //第一次进入 //把to,from全部放入堆栈
+    route_list.push({ to_path: to.path, from_path: from.path, active: true })
   }
   store.dispatch('handleChangeRouteList', route_list)
-})
+}) */
 
 export default router

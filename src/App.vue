@@ -1,7 +1,7 @@
 <template>
   <status-bar>
     <template v-slot:title>
-      <div class="title" @click="router.push('/')">代码自动生成工具</div>
+      <div class="title">代码自动生成工具</div>
     </template>
   </status-bar>
   <drawer />
