@@ -9,6 +9,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import StatusBar from '@/components/StatusBar.vue'
 import Drawer from '@/components/Drawer.vue'
 
@@ -17,7 +18,10 @@ export default defineComponent({
     StatusBar,
     Drawer,
   },
-  setup() {},
+  setup() {
+    const router = useRouter()
+    return { router }
+  },
 })
 </script>
 
