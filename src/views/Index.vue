@@ -57,7 +57,7 @@ export default defineComponent({
     .icon {
       width: 20px;
       height: 20px;
-      fill: #ffffff !important;
+      fill: $white !important;
       margin-right: 10px;
     }
   }
