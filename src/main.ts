@@ -26,16 +26,16 @@ const app = createApp(App)
 //配置全局属性
 //引入db
 const database = [
-  // {
-  //   table_name: 'template',
-  //   filename: path.join(remote.app.getPath('userData'), './template.db')
-  // },
-  // {
-  //   table_name: 'control',
-  //   filename: path.join(remote.app.getPath('userData'), './control.db')
-  // }
-  { table_name: 'template', filename: './src/db/template.db' }, //表名, 表数据库文件路径  //生成环境用绝对路径E:/codetool/code-auto-tool/template.db
-  { table_name: 'control', filename: './src/db/control.db' } //表名, 表数据库文件路径
+  {
+    table_name: 'template',
+    filename: path.join(remote.app.getPath('userData'), './template.db')
+  },
+  {
+    table_name: 'control',
+    filename: path.join(remote.app.getPath('userData'), './control.db')
+  }
+  // { table_name: 'template', filename: './src/db/template.db' }, //表名, 表数据库文件路径  //生成环境用绝对路径E:/codetool/code-auto-tool/template.db
+  // { table_name: 'control', filename: './src/db/control.db' } //表名, 表数据库文件路径
 ]
 app.config.globalProperties.$db = []
 database.forEach((table: any) => {
