@@ -10,7 +10,8 @@
         <el-col :sm="16" :md="10">
           <el-form ref="stepOneFormRef" label-position="right" label-width="150px" @submit.prevent>
             <el-form-item label="选择模板" prop="template_id">
-              <el-select v-model="ruleForm.template_id" placeholder="请选择模板" @change="handleChangeTemplate" clearable>
+              <el-select v-model="ruleForm.template_id" placeholder="请选择模板" @change="handleChangeTemplate" clearable
+                         filterable>
                 <el-option v-for="item in template_options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -187,6 +188,11 @@ export default defineComponent({
           content: '',
         },
       ]
+
+      if (val == '') {
+        //如果清空
+        return false
+      }
 
       let template_id = val
       //查询条件 只显示基础控件
