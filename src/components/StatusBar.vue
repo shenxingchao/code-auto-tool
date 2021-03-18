@@ -67,7 +67,7 @@ export default defineComponent({
     //点击路由返回按钮
     const handleClickRouterBack = () => {
       if (!is_back) {
-        // return false
+        return false
       }
       router.back()
     }
@@ -75,7 +75,7 @@ export default defineComponent({
     //点击路由前进按钮
     const handleClickRouterForward = () => {
       if (!is_forward) {
-        // return false
+        return false
       }
       router.forward()
     }
@@ -90,25 +90,24 @@ export default defineComponent({
 
     //数据实时计算显示，字符处理的用computed  涉及交互事件，异步处理，样式变化，符合条件逻辑处理，开销较大的用watch
     watch(store.state.route_list, (newValue, oldValue) => {
-      console.log(newValue)
-      // let active_index = newValue.findIndex((item: any) => item.active == true)
-      // if (active_index == 0 && newValue.length == 1) {
-      //   //不能前进也不能返回
-      //   is_back.value = false
-      //   is_forward.value = false
-      // } else if (active_index == 0 && newValue.length > 1) {
-      //   //可以前进不能返回
-      //   is_back.value = false
-      //   is_forward.value = true
-      // } else if (active_index >= 1 && active_index < newValue.length - 1) {
-      //   //可以返回也可以前进
-      //   is_back.value = true
-      //   is_forward.value = true
-      // } else if (active_index >= 1 && active_index == newValue.length - 1) {
-      //   //可以返回不能前进
-      //   is_back.value = true
-      //   is_forward.value = false
-      // }
+      let active_index = newValue.findIndex((item: any) => item.active == true)
+      if (active_index == 0 && newValue.length == 1) {
+        //不能前进也不能返回
+        is_back.value = false
+        is_forward.value = false
+      } else if (active_index == 0 && newValue.length > 1) {
+        //可以前进不能返回
+        is_back.value = false
+        is_forward.value = true
+      } else if (active_index >= 1 && active_index < newValue.length - 1) {
+        //可以返回也可以前进
+        is_back.value = true
+        is_forward.value = true
+      } else if (active_index >= 1 && active_index == newValue.length - 1) {
+        //可以返回不能前进
+        is_back.value = true
+        is_forward.value = false
+      }
     })
 
     return {
@@ -159,9 +158,7 @@ export default defineComponent({
       padding: 4px 10px;
       fill: $white;
       cursor: pointer;
-      border: $border;
-      border-color: $h3c;
-      opacity: 0.6;
+      border: $border-transparent;
       &:hover {
         background: $light-theme;
       }
@@ -183,6 +180,13 @@ export default defineComponent({
     .icon-disabled {
       fill: $h3c;
       cursor: not-allowed;
+      &:hover {
+        background: none !important;
+      }
+      &:active {
+        background: none !important;
+        fill: $h3c;
+      }
     }
   }
   .tool_btn {

@@ -80,7 +80,7 @@ const router = createRouter({
 })
 
 //路由前置钩子
-/* router.beforeEach((to, from) => {
+router.beforeEach((to, from) => {
   //旧路由数组,还没有push了
   let route_list: any[] = store.state.route_list
   //找到当前激活的路由
@@ -109,6 +109,12 @@ const router = createRouter({
       //找到要去的路径，置为active
       route_list[active_index + 1].active = true
     } else {
+      //*这步很关键，当前激活的假如不是最后一个 就是返回后再添加新路由，需要把当前激活索引后的元素先删除 相当于堆栈由当前索引重新开始叠加
+      if (active_index != route_list.length - 1) {
+        let del_length = route_list.length - 1 - active_index
+        //这里用filter过滤会有问题，会改变原数组类型 用pop也是可以的，就是要循环了
+        route_list.splice(active_index + 1, del_length)
+      }
       route_list.forEach((element: any) => {
         element.active = false
       })
@@ -119,6 +125,6 @@ const router = createRouter({
     route_list.push({ to_path: to.path, from_path: from.path, active: true })
   }
   store.dispatch('handleChangeRouteList', route_list)
-}) */
+})
 
 export default router
