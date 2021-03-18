@@ -241,7 +241,6 @@ export default defineComponent({
 
     //删除字段
     const handleDeleteField = (key: number) => {
-      data.ruleForm.list
       data.ruleForm.list = data.ruleForm.list.filter(
         (item, index) => index != key
       )
