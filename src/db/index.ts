@@ -1,6 +1,6 @@
 import Datastore, { RemoveOptions, UpdateOptions } from 'nedb'
 // import path from 'path'
-// import { remote } from 'electron'
+// const remote = require('@electron/remote')
 
 type Query<T> = Partial<T> & {
   [prop: string]: string

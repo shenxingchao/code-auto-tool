@@ -16,6 +16,7 @@ import installExtension /*,{ VUEJS_DEVTOOLS }*/ from 'electron-devtools-installe
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 import { autoUpdater } from 'electron-updater' //引入 autoUpdater
+require('@electron/remote/main').initialize() //初始化remote模块
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([

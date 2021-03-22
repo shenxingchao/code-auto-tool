@@ -227,9 +227,6 @@ export default defineComponent({
             }
           })
           getTemplateList()
-          global.$message.success({
-            message: '删除成功!',
-          })
         })
         .catch(() => {
           global.$message.error({

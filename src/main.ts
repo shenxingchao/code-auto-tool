@@ -19,7 +19,7 @@ import Db from '@/db/index'
 import moment from 'moment'
 //引入path和remote
 import path from 'path'
-import { remote } from 'electron'
+const remote = require('@electron/remote')
 
 const app = createApp(App)
 
